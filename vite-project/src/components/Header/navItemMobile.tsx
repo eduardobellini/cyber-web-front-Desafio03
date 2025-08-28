@@ -11,7 +11,7 @@ export default function NavItemMobile(props: NavLinkInterfaceMobile) {
       <li>
         <a
           href={props.home}
-          className="block py-2 px-3 text-gray-700 rounded-sm hover:bg-gray-100"
+          className="block py-2 px-3 text-gray-700 rounded-sm hover:bg-gray-100 font-medium"
         >
           Home
         </a>
@@ -19,7 +19,7 @@ export default function NavItemMobile(props: NavLinkInterfaceMobile) {
       <li>
         <a
           href={props.shop}
-          className="block py-2 px-3 text-gray-700 rounded-sm hover:bg-gray-100"
+          className="block py-2 px-3 text-gray-700 rounded-sm hover:bg-gray-100 font-medium"
         >
           Shop
         </a>
@@ -27,7 +27,7 @@ export default function NavItemMobile(props: NavLinkInterfaceMobile) {
       <li>
         <a
           href={props.contatUs}
-          className="block py-2 px-3 text-gray-700 rounded-sm hover:bg-gray-100"
+          className="block py-2 px-3 text-gray-700 rounded-sm hover:bg-gray-100 font-medium"
         >
           Contact Us
         </a>
@@ -35,7 +35,7 @@ export default function NavItemMobile(props: NavLinkInterfaceMobile) {
       <li>
         <a
           href={props.blog}
-          className="block py-2 px-3 text-gray-700 rounded-sm hover:bg-gray-100"
+          className="block py-2 px-3 text-gray-700 rounded-sm hover:bg-gray-100 font-medium"
         >
           Blog
         </a>
