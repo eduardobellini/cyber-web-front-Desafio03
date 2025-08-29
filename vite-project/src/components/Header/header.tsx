@@ -11,8 +11,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header>
-      <nav className="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
+    <header className="sticky top-0">
+      <nav className="bg-white  w-full start-0 border-b border-gray-200">
         <div className="max-w-screen-xl mx-auto flex items-center justify-around p-4 relative">
          
           <div className="flex items-center">
