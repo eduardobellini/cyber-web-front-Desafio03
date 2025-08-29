@@ -1,9 +1,6 @@
-// src/components/CategoryBrowser/index.tsx
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// Definindo os tipos de dados
 interface Category {
   name: string;
   slug: string;
@@ -13,18 +10,6 @@ interface Category {
 interface Props {
   categories: Category[];
 }
-
-const ArrowLeftIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 12H4M4 12L10 18M4 12L10 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
-  
-const ArrowRightIcon = () => (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 12H20M20 12L14 6M20 12L14 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  );
 
 const CategoryBrowser: React.FC<Props> = ({ categories }) => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -50,20 +35,20 @@ const CategoryBrowser: React.FC<Props> = ({ categories }) => {
           <h2 className="font-medium text-2xl tracking-wide">
             Browse By Category
           </h2>
-          <div className="flex items-center gap-x-4">
+          <div className="flex items-center gap-x-1"> 
             <button
               onClick={goToPrevPage}
               disabled={currentPage === 0}
-              className="p-1 rounded-full transition-colors disabled:text-gray-300 disabled:cursor-not-allowed hover:bg-gray-200"
+              className="w-10 h-10 flex items-center justify-center rounded-full transition-colors disabled:text-gray-300 disabled:cursor-not-allowed hover:bg-gray-200 text-2xl font-bold"
             >
-              <ArrowLeftIcon />
+              &lt;
             </button>
             <button
               onClick={goToNextPage}
               disabled={currentPage === totalPages - 1 || totalPages <= 1}
-              className="p-1 rounded-full transition-colors disabled:text-gray-300 disabled:cursor-not-allowed hover:bg-gray-200"
+              className="w-10 h-10 flex items-center justify-center rounded-full transition-colors disabled:text-gray-300 disabled:cursor-not-allowed hover:bg-gray-200 text-2xl font-bold"
             >
-              <ArrowRightIcon />
+              &gt;
             </button>
           </div>
         </div>
