@@ -3,6 +3,8 @@ import React from 'react';
 import { FaFacebookF, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
+import CyberImg from "../../Assets/CyberWhite.svg";
+
 const servicesLinks = [
   { name: 'Bonus program', url: '#' },
   { name: 'Gift cards', url: '#' },
@@ -56,7 +58,7 @@ const Footer: React.FC = () => {
       >
         <div className="flex flex-col items-center gap-y-4 md:items-start max-w-xs">
           <div>
-            <h2 className="text-3xl font-medium tracking-wider text-white">cyber</h2>
+            <img src={CyberImg} className="h-8" alt="Cyber Logo" />
             <p className="text-gray-400 text-[13px] font-normal leading-[24px] mt-4">
               We are a residential interior design firm located in Portland. Our boutique-studio offers more than
             </p>
