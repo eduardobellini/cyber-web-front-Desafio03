@@ -1,36 +1,26 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import Footer from './components/Footer/footer';
 import Header from './components/Header/header';
-import CategoryBrowser from './components/CategoryBrowser/categoryBrowser';
-import BottomBanner from './components/BottomBanner/bottomBanner';
-
-const sampleCategories = [
-  { name: 'Phones', slug: 'phones', iconUrl: 'https://.../phone-icon.svg' },
-  { name: 'Smart Watches', slug: 'smart-watches', iconUrl: 'https://.../watch-icon.svg' },
-  { name: 'Laptops', slug: 'laptops', iconUrl: 'https://.../laptop-icon.svg' },
-  { name: 'Tablets', slug: 'tablets', iconUrl: 'https://.../tablet-icon.svg' },
-  { name: 'Headphones', slug: 'headphones', iconUrl: 'https://.../headphones-icon.svg' },
-  { name: 'Cameras', slug: 'cameras', iconUrl: 'https://.../camera-icon.svg' },
-  { name: 'Cameras', slug: 'cameras', iconUrl: 'https://.../camera-icon.svg' },
-];
+import Footer from './components/Footer/footer';
+import HomePage from './pages/HomePage';
+import ProductsPage from './pages/ProductsPage';
 
 function App() {
-
-
   return (
-    <>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow pagina-principal">
-          <h1>Bem-vindo à Cyber</h1>
-          <p>Conteúdo da sua página vai aqui...</p>
-        </main>
-        <CategoryBrowser categories={sampleCategories} />
-        <BottomBanner/>
-        <Footer />
+    <div className="flex flex-col min-h-screen">
+      <Header />
+
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<ProductsPage />} />
+          <Route path="/shop/:category" element={<ProductsPage />} />
+        </Routes>
       </div>
-    </>
+
+      <Footer />
+    </div>
   );
 }
 
