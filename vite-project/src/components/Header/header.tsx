@@ -11,10 +11,9 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0">
+    <header className="sticky top-0 z-30">
       <nav className="bg-white  w-full start-0 border-b border-gray-200">
         <div className="max-w-screen-xl mx-auto flex items-center justify-around p-4 relative">
-         
           <div className="flex items-center">
             <a
               href="/"
@@ -22,7 +21,6 @@ export default function Header() {
             >
               <img src={CyberImg} className="h-8" alt="Cyber Logo" />
             </a>
-            
             <div className="hidden lg:block ml-10 mr-10">
               <div className="relative w-full">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -50,26 +48,21 @@ export default function Header() {
               </div>
             </div>
           </div>
-
-        
           <div className="hidden lg:flex items-center ml-4 text-center w-auto pr-10">
             <ul className="flex space-x-20 font-medium text-gray-500 whitespace-nowrap">
               <NavItem
                 home="/"
-                shop="/"
+                shop="/shop"
                 contatUs="/"
                 blog="/"
               />
             </ul>
           </div>
-
           <div className="hidden lg:flex items-center space-x-2">
             <CiHeart size={28} />
             <CiShoppingCart size={28} />
             <CiUser size={28} />
           </div>
-
-         
           <div className="lg:hidden">
             <button
               type="button"
@@ -96,15 +89,14 @@ export default function Header() {
             </button>
           </div>
 
-          
           <div
-            className={`absolute top-16 right-4 w-64 lg:hidden ${menuOpen ? "" : "hidden"} bg-white shadow-lg rounded-lg`}
+            className={`absolute top-16 right-4 w-64 lg:hidden ${menuOpen ? "" : "hidden"} bg-white shadow-lg rounded-lg z-100`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col p-4 font-medium border border-gray-100 rounded-lg bg-gray-50">
               <NavItemMobile
                 home="/"
-                shop="/"
+                shop="/shop"
                 contatUs="/"
                 blog="/"
               />
