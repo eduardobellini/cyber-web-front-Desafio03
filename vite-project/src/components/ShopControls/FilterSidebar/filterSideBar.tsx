@@ -1,16 +1,12 @@
-// src/components/FilterSidebar/index.tsx
-
 import React, { useState } from 'react';
 import type { BrandData } from '../../../mocks/data';
 
-// Ícone de Seta (Chevron)
 const ChevronUpIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M18 15L12 9L6 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
 
-// A interface agora só tem o que é necessário para a sidebar estática
 interface FilterSidebarProps {
   brands: BrandData[];
   selectedBrands: string[];
@@ -30,7 +26,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ brands, selectedBrands, o
         <div>
             <button 
                 onClick={() => setIsBrandSectionOpen(!isBrandSectionOpen)}
-                className="w-full flex items-center justify-between py-4"
+                className="w-full flex items-center justify-between py-4 border-b border-gray-200"
             >
                 <h4 className="font-bold text-xl">Brand</h4>
                 <div className={`transition-transform duration-300 ${!isBrandSectionOpen && 'rotate-180'}`}>
@@ -39,7 +35,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ brands, selectedBrands, o
             </button>
             
             <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isBrandSectionOpen ? 'max-h-[1000px]' : 'max-h-0'}`}>
-                <div className="pb-4">
+                <div className="pb-6 pt-4">
                     <div className="relative w-full mb-4">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg className="w-4 h-4 text-gray-500" aria-hidden="true" fill="none" viewBox="0 0 20 20">

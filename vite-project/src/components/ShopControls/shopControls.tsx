@@ -1,5 +1,3 @@
-// src/components/ShopControls/index.tsx
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -20,7 +18,8 @@ const ChevronDownIcon = () => (
 interface ShopControlsProps {
     sortOrder: string;
     onSortOrderChange: (value: string) => void;
-    category: string; 
+    category: string;
+    totalProducts: number;
 }
 
 const sortOptions = [
@@ -28,7 +27,7 @@ const sortOptions = [
     { value: 'low-to-high', label: 'By price: Low to High' },
 ];
 
-const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChange, category }) => {
+const SortDropdown: React.FC<Pick<ShopControlsProps, 'sortOrder' | 'onSortOrderChange'>> = ({ sortOrder, onSortOrderChange }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleSelectOption = (value: string) => {
@@ -39,46 +38,60 @@ const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChang
     const selectedLabel = sortOptions.find(opt => opt.value === sortOrder)?.label;
 
     return (
-        <div className="flex items-center justify-between md:justify-end gap-4 mb-8">
-            <Link 
-                to={`/shop/filters?category=${category}`}
+        <div className="relative h-[56px] w-full md:w-auto md:min-w-[220px]">
+            <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="
-                    flex items-center justify-between gap-x-2 
-                    h-[56px] w-[164px] rounded-lg border-[0.5px] border-[#D4D4D4] 
-                    bg-white px-4 text-gray-700 text-sm
-                    md:hidden 
+                    h-full w-full flex items-center justify-between rounded-lg border-[0.5px] border-[#D4D4D4] 
+                    bg-white px-4 text-[10px] font-normal leading-4 tracking-tight
+                    text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500
                 "
             >
-                <span>Filters</span>
-                <FilterIcon />
-            </Link>
+                <span>{selectedLabel}</span>
+                <ChevronDownIcon />
+            </button>
 
-            <div className="relative h-[56px] w-full md:w-auto md:min-w-[220px]">
-                <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            {isDropdownOpen && (
+                <div className="absolute top-full mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                    {sortOptions.map(option => (
+                        <button
+                            key={option.value}
+                            onClick={() => handleSelectOption(option.value)}
+                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                            {option.label}
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
+const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChange, category, totalProducts }) => {
+    return (
+        <div className="flex items-center justify-between gap-4 mb-8">
+            <div className="flex md:hidden items-center justify-between w-full gap-4">
+                <Link 
+                    to={`/shop/filters?category=${category}`}
                     className="
-                        h-full w-full flex items-center justify-between rounded-lg border-[0.5px] border-[#D4D4D4] 
-                        bg-white px-4 text-[10px] font-normal leading-4 tracking-tight
-                        text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800
+                        flex items-center justify-between
+                        h-[56px] w-full rounded-lg border-[0.5px] border-[#D4D4D4] 
+                        bg-white px-4 text-gray-700 text-sm
                     "
                 >
-                    <span>{selectedLabel}</span>
-                    <ChevronDownIcon />
-                </button>
+                    <span>Filters</span>
+                    <FilterIcon />
+                </Link>
+                <SortDropdown sortOrder={sortOrder} onSortOrderChange={onSortOrderChange} />
+            </div>
 
-                {isDropdownOpen && (
-                    <div className="absolute top-full mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                        {sortOptions.map(option => (
-                            <button
-                                key={option.value}
-                                onClick={() => handleSelectOption(option.value)}
-                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                                {option.label}
-                            </button>
-                        ))}
-                    </div>
-                )}
+            <div className="hidden md:flex items-center justify-between w-full">
+                <p className="text-gray-700">
+                    Selected Products:
+                    <span className="font-bold text-black ml-2">{totalProducts}</span>
+                </p>
+                <SortDropdown sortOrder={sortOrder} onSortOrderChange={onSortOrderChange} />
             </div>
         </div>
     );
