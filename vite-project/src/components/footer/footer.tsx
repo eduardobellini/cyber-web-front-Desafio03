@@ -56,8 +56,8 @@ const Footer: React.FC = () => {
           md:flex-row md:items-start md:text-left md:justify-evenly md:gap-x-8
         "
       >
-        <div className="flex flex-col items-center gap-y-4 md:items-start max-w-xs">
-          <div>
+        <div className="flex flex-col items-center text-center gap-y-4 md:items-start max-w-xs">
+          <div className="flex flex-col items-center text-center">
             <img src={CyberImg} className="h-8" alt="Cyber Logo" />
             <p className="text-gray-400 text-[13px] font-normal leading-[24px] mt-4">
               We are a residential interior design firm located in Portland. Our boutique-studio offers more than
