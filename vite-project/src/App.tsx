@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header/header';
 import Footer from './components/Footer/footer';
-import FullHero from './components/Hero/FullHero';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 

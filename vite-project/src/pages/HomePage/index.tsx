@@ -1,6 +1,7 @@
 import React from 'react';
 import CategoryBrowser from '../../components/CategoryBrowser/categoryBrowser';
 import BottomBanner from '../../components/BottomBanner/bottomBanner';
+import FullHero from '../../components/Hero/FullHero';
 
 const sampleCategories = [
   { name: 'Phones', slug: 'phones', iconUrl: 'https://.../phone-icon.svg' },
@@ -20,6 +21,7 @@ const HomePage = () => {
         <h1>Bem-vindo à Cyber</h1>
         <p>Conteúdo da sua página vai aqui...</p>
       </main>
+      <FullHero />
       <CategoryBrowser categories={sampleCategories} />
       <BottomBanner />
     </>

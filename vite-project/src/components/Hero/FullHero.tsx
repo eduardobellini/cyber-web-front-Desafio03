@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 import iphoneImage from './assets/Iphone_Hero.png';
 import playstation5Image from './assets/PlayStation.png';
