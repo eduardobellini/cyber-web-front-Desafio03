@@ -1,8 +1,5 @@
-// src/components/ShopControls/index.tsx
-
 import React, { useState } from 'react';
 
-// Ícone de Filtro (SVG)
 const FilterIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -11,7 +8,6 @@ const FilterIcon = () => (
     </svg>
 );
 
-// Ícone de Seta para Baixo (SVG)
 const ChevronDownIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -21,7 +17,7 @@ const ChevronDownIcon = () => (
 interface ShopControlsProps {
     sortOrder: string;
     onSortOrderChange: (value: string) => void;
-    onFiltersClick: () => void; // Função para quando o botão de filtro for clicado
+    onFiltersClick: () => void;
 }
 
 const sortOptions = [
@@ -40,8 +36,7 @@ const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChang
     const selectedLabel = sortOptions.find(opt => opt.value === sortOrder)?.label;
 
     return (
-        <div className="flex items-center gap-4 mb-8"> {/* Ajustei para gap-4 para 16px */}
-            {/* Botão de Filtros */}
+        <div className="flex items-center gap-4 mb-8">
             <button 
                 onClick={onFiltersClick}
                 className="
@@ -54,8 +49,7 @@ const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChang
                 <FilterIcon />
             </button>
 
-            {/* Dropdown Customizado para Ordenação */}
-            <div className="relative h-[56px] w-full min-w-[140px] max-w-[256px]"> {/* Ajustes aqui */}
+            <div className="relative h-[56px] w-full min-w-[140px] max-w-[256px]">
                 <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="
@@ -68,7 +62,6 @@ const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChang
                     <ChevronDownIcon />
                 </button>
 
-                {/* Menu de Opções do Dropdown */}
                 {isDropdownOpen && (
                     <div className="absolute top-full mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                         {sortOptions.map(option => (
