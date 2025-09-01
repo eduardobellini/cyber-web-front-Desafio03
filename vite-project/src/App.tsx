@@ -1,19 +1,27 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import Footer from './components/Footer/footer';
 import Header from './components/Header/header';
+import Footer from './components/Footer/footer';
 import FullHero from './components/Hero/FullHero';
+import HomePage from './pages/HomePage';
+import ProductsPage from './pages/ProductsPage';
 
 function App() {
-
-
   return (
     <>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <FullHero/>
-        <Footer />
+      
+      <Header />
+
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<ProductsPage />} />
+          <Route path="/shop/:category" element={<ProductsPage />} />
+        </Routes>
       </div>
+
+      <Footer />
     </>
   );
 }
