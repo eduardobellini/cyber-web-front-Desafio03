@@ -76,9 +76,9 @@ const FilterPage: React.FC = () => {
                                     type="checkbox"
                                     checked={selectedBrands.includes(brandData.brand)}
                                     onChange={() => handleBrandChange(brandData.brand)}
-                                    className="h-5 w-5 rounded border-gray-300 text-red-500 focus:ring-red-500"
+                                    className="h-5 w-5 rounded border-gray-300 text-gray-800 focus:ring-gray-800"
                                 />
-                                <span className="text-gray-700">{brandData.brand}</span>
+                                <span className="text-gray-700 font-medium">{brandData.brand}</span>
                             </div>
                             <span className="text-sm text-gray-500">{brandData.total}</span>
                         </label>

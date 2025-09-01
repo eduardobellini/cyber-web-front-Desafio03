@@ -10,64 +10,57 @@ const ProductsPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   
   const [sortOrder, setSortOrder] = useState('high-to-low');
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
   
+  // O estado das marcas selecionadas continua aqui, lendo da URL
   const [selectedBrands, setSelectedBrands] = useState<string[]>(
     searchParams.get('brands')?.split(',') || []
   );
 
   const availableBrands = mockBrandsByCategory[category] || [];
 
-  console.log('[ProductsPage] Categoria atual:', category);
-
+  // Esta função agora é usada apenas pela sidebar estática
   const handleBrandChange = (brand: string) => {
     const newSelected = selectedBrands.includes(brand)
       ? selectedBrands.filter(b => b !== brand)
       : [...selectedBrands, brand];
     
     setSelectedBrands(newSelected);
+    // Idealmente, aqui você atualizaria a URL em tempo real para refletir a seleção no desktop
   };
   
   return (
-    <>
-      <div className="md:hidden">
-        <FilterSidebar 
-            isOpen={isFilterOpen}
-            onClose={() => setIsFilterOpen(false)}
-            brands={availableBrands}
-            selectedBrands={selectedBrands}
-            onBrandChange={handleBrandChange}
-        />
+    <main className="container mx-auto px-6 py-8">
+      {/* Adicionaremos o Breadcrumb aqui depois */}
+      
+      {/* Container principal com o layout de Grid para tablet/desktop */}
+      <div className="md:grid md:grid-cols-4 md:gap-x-8">
+
+          {/* Coluna 1: Sidebar Estática (escondida no mobile) */}
+          <aside className="hidden md:block md:col-span-1">
+              <FilterSidebar 
+                  brands={availableBrands}
+                  selectedBrands={selectedBrands}
+                  onBrandChange={handleBrandChange}
+              />
+          </aside>
+
+          {/* Coluna 2: Conteúdo Principal */}
+          <div className="md:col-span-3">
+              <ShopControls 
+                  sortOrder={sortOrder}
+                  onSortOrderChange={setSortOrder}
+                  category={category}
+              />
+
+              {/* A Grade de Produtos virá aqui */}
+              <div className="text-center">
+                  <p>Grade de produtos aparecerá aqui...</p>
+                  <p className="mt-4 text-sm text-gray-500">Categoria: {category}</p>
+                  <p className="text-sm text-gray-500">Marcas selecionadas pela URL: {selectedBrands.join(', ')}</p>
+              </div>
+          </div>
       </div>
-
-      <main className="container mx-auto px-6 py-8">
-        <div className="md:grid md:grid-cols-4 md:gap-x-8">
-            <aside className="hidden md:block md:col-span-1">
-                <FilterSidebar 
-                    isOpen={true} 
-                    onClose={() => {}} 
-                    brands={availableBrands}
-                    selectedBrands={selectedBrands}
-                    onBrandChange={handleBrandChange}
-                />
-            </aside>
-
-            <div className="md:col-span-3">
-                <ShopControls 
-                    sortOrder={sortOrder}
-                    onSortOrderChange={setSortOrder}
-                    category={category}
-                />
-
-                <div className="text-center">
-                    <p>Grade de produtos aparecerá aqui...</p>
-                    <p className="mt-4 text-sm text-gray-500">Categoria: {category}</p>
-                    <p className="text-sm text-gray-500">Marcas selecionadas pela URL: {selectedBrands.join(', ')}</p>
-                </div>
-            </div>
-        </div>
-      </main>
-    </>
+    </main>
   );
 };
 
