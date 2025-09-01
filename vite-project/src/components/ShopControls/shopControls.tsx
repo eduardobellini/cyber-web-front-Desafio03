@@ -1,4 +1,7 @@
+// src/components/ShopControls/index.tsx
+
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const FilterIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,7 +20,7 @@ const ChevronDownIcon = () => (
 interface ShopControlsProps {
     sortOrder: string;
     onSortOrderChange: (value: string) => void;
-    onFiltersClick: () => void;
+    category: string; 
 }
 
 const sortOptions = [
@@ -25,7 +28,7 @@ const sortOptions = [
     { value: 'low-to-high', label: 'By price: Low to High' },
 ];
 
-const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChange, onFiltersClick }) => {
+const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChange, category }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleSelectOption = (value: string) => {
@@ -36,25 +39,26 @@ const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChang
     const selectedLabel = sortOptions.find(opt => opt.value === sortOrder)?.label;
 
     return (
-        <div className="flex items-center gap-4 mb-8">
-            <button 
-                onClick={onFiltersClick}
+        <div className="flex items-center justify-between md:justify-end gap-4 mb-8">
+            <Link 
+                to={`/shop/filters?category=${category}`}
                 className="
                     flex items-center justify-between gap-x-2 
-                    h-[56px] min-w-[140px] max-w-[256px] w-[164px] rounded-lg border-[0.5px] border-[#D4D4D4] 
-                    bg-white px-4 text-gray-700
+                    h-[56px] w-[164px] rounded-lg border-[0.5px] border-[#D4D4D4] 
+                    bg-white px-4 text-gray-700 text-sm
+                    md:hidden 
                 "
             >
                 <span>Filters</span>
                 <FilterIcon />
-            </button>
+            </Link>
 
-            <div className="relative h-[56px] w-full min-w-[140px] max-w-[256px]">
+            <div className="relative h-[56px] w-full md:w-auto md:min-w-[220px]">
                 <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="
                         h-full w-full flex items-center justify-between rounded-lg border-[0.5px] border-[#D4D4D4] 
-                        bg-white px-4 text-[10px] font-normal leading-[16px] tracking-tight
+                        bg-white px-4 text-[10px] font-normal leading-4 tracking-tight
                         text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500
                     "
                 >
