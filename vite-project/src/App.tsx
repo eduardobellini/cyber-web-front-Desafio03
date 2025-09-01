@@ -3,6 +3,7 @@ import React from 'react';
 import Footer from './components/Footer/footer';
 import Header from './components/Header/header';
 import CategoryBrowser from './components/CategoryBrowser/categoryBrowser';
+import BottomBanner from './components/BottomBanner/bottomBanner';
 
 const sampleCategories = [
   { name: 'Phones', slug: 'phones', iconUrl: 'https://.../phone-icon.svg' },
@@ -26,6 +27,7 @@ function App() {
           <p>Conteúdo da sua página vai aqui...</p>
         </main>
         <CategoryBrowser categories={sampleCategories} />
+        <BottomBanner/>
         <Footer />
       </div>
     </>
