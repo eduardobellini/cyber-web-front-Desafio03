@@ -44,7 +44,7 @@ const SortDropdown: React.FC<Pick<ShopControlsProps, 'sortOrder' | 'onSortOrderC
                 className="
                     h-full w-full flex items-center justify-between rounded-lg border-[0.5px] border-[#D4D4D4] 
                     bg-white px-4 text-[10px] font-normal leading-4 tracking-tight
-                    text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500
+                    text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800
                 "
             >
                 <span>{selectedLabel}</span>
