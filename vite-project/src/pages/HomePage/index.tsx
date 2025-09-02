@@ -18,13 +18,9 @@ const sampleCategories = [
 const HomePage = () => {
   return (
     <>
-      <main className="pagina-principal">
-        <h1>Bem-vindo à Cyber</h1>
-        <p>Conteúdo da sua página vai aqui...</p>
-      </main>
       <FullHero />
       <CategoryBrowser categories={sampleCategories} />
-      <ProductHome/>
+      <ProductHome />
       <BottomBanner />
     </>
   );

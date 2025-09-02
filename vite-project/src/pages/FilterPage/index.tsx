@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { mockBrandsByCategory } from '../../mocks/data';
+import { type BrandData } from '../../components/ShopControls/FilterSidebar/filterSideBar';
 
 const BackArrowIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -11,12 +12,13 @@ const BackArrowIcon = () => (
 const FilterPage: React.FC = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const location = useLocation();
+
+    const availableBrands: BrandData[] = location.state?.availableBrands || [];
 
     const category = searchParams.get('category') || 'all';
-    
-    const availableBrands = mockBrandsByCategory[category] || [];
-
     const initialBrands = searchParams.get('brands')?.split(',') || [];
+    
     const [selectedBrands, setSelectedBrands] = useState<string[]>(initialBrands);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -29,11 +31,14 @@ const FilterPage: React.FC = () => {
     };
 
     const applyFilters = () => {
-        const newSearchParams = new URLSearchParams();
+        const newSearchParams = new URLSearchParams(searchParams);
         if (selectedBrands.length > 0) {
             newSearchParams.set('brands', selectedBrands.join(','));
+        } else {
+            newSearchParams.delete('brands');
         }
-        navigate(`/shop/${category}?${newSearchParams.toString()}`);
+        const categoryPath = category === 'all' ? '' : `/${category}`;
+        navigate(`/shop${categoryPath}?${newSearchParams.toString()}`);
     };
 
     const filteredBrands = availableBrands.filter(brandData =>
@@ -68,22 +73,26 @@ const FilterPage: React.FC = () => {
                   />
                 </div>
                 
-                <div className="space-y-4">
-                    {filteredBrands.map(brandData => (
-                        <label key={brandData.brand} className="flex items-center justify-between cursor-pointer">
-                            <div className="flex items-center space-x-3">
-                                <input 
-                                    type="checkbox"
-                                    checked={selectedBrands.includes(brandData.brand)}
-                                    onChange={() => handleBrandChange(brandData.brand)}
-                                    className="h-5 w-5 rounded border-gray-300 text-gray-800 focus:ring-gray-800"
-                                />
-                                <span className="text-gray-700 font-medium">{brandData.brand}</span>
-                            </div>
-                            <span className="text-sm text-gray-500">{brandData.total}</span>
-                        </label>
-                    ))}
-                </div>
+                {availableBrands.length > 0 ? (
+                    <div className="space-y-4">
+                        {filteredBrands.map(brandData => (
+                            <label key={brandData.brand} className="flex items-center justify-between cursor-pointer">
+                                <div className="flex items-center space-x-3">
+                                    <input 
+                                        type="checkbox"
+                                        checked={selectedBrands.includes(brandData.brand)}
+                                        onChange={() => handleBrandChange(brandData.brand)}
+                                        className="h-5 w-5 rounded border-gray-300 text-red-500 focus:ring-red-500"
+                                    />
+                                    <span className="text-gray-700 font-medium">{brandData.brand}</span>
+                                </div>
+                                <span className="text-sm text-gray-500">{brandData.total}</span>
+                            </label>
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-gray-500">No brands found for this category.</p>
+                )}
             </main>
 
             <footer className="p-4 border-t">
