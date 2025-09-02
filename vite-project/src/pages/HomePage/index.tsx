@@ -20,7 +20,7 @@ const HomePage = () => {
     <>
       <FullHero />
       <CategoryBrowser categories={sampleCategories} />
-      <ProductHome/>
+      <ProductHome />
       <BottomBanner />
     </>
   );

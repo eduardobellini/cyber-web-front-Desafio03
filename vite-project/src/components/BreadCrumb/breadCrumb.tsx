@@ -14,7 +14,7 @@ const Breadcrumb: React.FC = () => {
   };
 
   return (
-    <nav aria-label="breadcrumb" className="mb-8">
+    <nav aria-label="breadcrumb" className="hidden md:block mb-8">
       <ol className="flex items-center space-x-2 text-sm text-gray-500">
         <li>
           <Link to="/" className="hover:text-gray-800">

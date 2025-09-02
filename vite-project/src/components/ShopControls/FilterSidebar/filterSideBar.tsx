@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import type { BrandData } from '../../../mocks/data';
 
 const ChevronUpIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,7 +12,13 @@ interface FilterSidebarProps {
   onBrandChange: (brand: string) => void;
 }
 
+export interface BrandData {
+  brand: string;
+  total: number;
+}
+
 const FilterSidebar: React.FC<FilterSidebarProps> = ({ brands, selectedBrands, onBrandChange }) => {
+  // ... (todo o resto do código continua exatamente igual)
   const [searchTerm, setSearchTerm] = useState('');
   const [isBrandSectionOpen, setIsBrandSectionOpen] = useState(true);
 
@@ -35,7 +40,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ brands, selectedBrands, o
             </button>
             
             <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isBrandSectionOpen ? 'max-h-[1000px]' : 'max-h-0'}`}>
-                <div className="pb-6 pt-4">
+                <div className="pt-6 pb-6">
                     <div className="relative w-full mb-4">
                         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg className="w-4 h-4 text-gray-500" aria-hidden="true" fill="none" viewBox="0 0 20 20">
@@ -59,9 +64,9 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ brands, selectedBrands, o
                                     type="checkbox"
                                     checked={selectedBrands.includes(brandData.brand)}
                                     onChange={() => onBrandChange(brandData.brand)}
-                                    className="h-5 w-5 rounded border-gray-300 text-gray-800 focus:ring-gray-800"
+                                    className="h-5 w-5 rounded border-gray-300 text-red-500 focus:ring-red-500"
                                 />
-                                <span className="text-gray-700 text-base">{brandData.brand}</span>
+                                <span className="text-gray-700 text-base font-medium">{brandData.brand}</span>
                             </div>
                             <span className="text-sm text-gray-500">{brandData.total}</span>
                         </label>
