@@ -1,21 +1,46 @@
+// src/pages/ProductsPage/index.tsx
+
 import React, { useState, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import ShopControls from '../../components/ShopControls/shopControls';
 import FilterSidebar from '../../components/ShopControls/FilterSidebar/filterSideBar';
 import Breadcrumb from '../../components/BreadCrumb/breadCrumb';
+import ProductGrid from '../../components/ProductGrid/productGrid';
+import Pagination from '../../components/Pagination/pagination';
 import { mockBrandsByCategory } from '../../mocks/data';
+import { mockProducts } from '../../mocks/products';
 
 const ProductsPage: React.FC = () => {
   const { category = 'all' } = useParams<{ category?: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   
+  const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState('high-to-low');
   
   const [selectedBrands, setSelectedBrands] = useState<string[]>(
     searchParams.get('brands')?.split(',') || []
   );
+  
+  const isDesktopOrTablet = useMediaQuery('(min-width: 768px)');
+  const pageSize = isDesktopOrTablet ? 9 : 8;
 
   const availableBrands = mockBrandsByCategory[category] || [];
+
+  const filteredProducts = useMemo(() => {
+    return mockProducts.filter(p => {
+        if (selectedBrands.length === 0) return true;
+        return selectedBrands.includes(p.brand);
+    });
+  }, [selectedBrands]);
+
+  const totalProducts = filteredProducts.length;
+  const totalPages = Math.ceil(totalProducts / pageSize);
+
+  const productsToDisplay = filteredProducts.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   const handleBrandChange = (brand: string) => {
     const newSelected = selectedBrands.includes(brand)
@@ -23,7 +48,7 @@ const ProductsPage: React.FC = () => {
       : [...selectedBrands, brand];
     
     setSelectedBrands(newSelected);
-
+    
     const newSearchParams = new URLSearchParams(searchParams);
     if (newSelected.length > 0) {
         newSearchParams.set('brands', newSelected.join(','));
@@ -32,14 +57,6 @@ const ProductsPage: React.FC = () => {
     }
     setSearchParams(newSearchParams);
   };
-
-  const totalProducts = useMemo(() => {
-    const brandsToConsider = selectedBrands.length > 0 
-      ? availableBrands.filter(brandData => selectedBrands.includes(brandData.brand))
-      : availableBrands;
-
-    return brandsToConsider.reduce((sum, currentBrand) => sum + currentBrand.total, 0);
-  }, [availableBrands, selectedBrands]);
   
   return (
     <main className="container mx-auto px-6 py-8">
@@ -62,9 +79,13 @@ const ProductsPage: React.FC = () => {
                   totalProducts={totalProducts}
               />
 
-              <div className="text-center">
-                  <p>Grade de produtos aparecerá aqui...</p>
-              </div>
+              <ProductGrid products={productsToDisplay} />
+
+              <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={page => setCurrentPage(page)}
+              />
           </div>
       </div>
     </main>
