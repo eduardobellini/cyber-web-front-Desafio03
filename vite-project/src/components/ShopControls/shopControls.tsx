@@ -52,7 +52,7 @@ const SortDropdown: React.FC<Pick<ShopControlsProps, 'sortOrder' | 'onSortOrderC
             </button>
 
             {isDropdownOpen && (
-                <div className="absolute top-full mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                <div className="absolute top-full mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-30">
                     {sortOptions.map(option => (
                         <button
                             key={option.value}

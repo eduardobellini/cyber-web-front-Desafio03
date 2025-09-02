@@ -13,14 +13,14 @@ function App() {
       
       <Header />
 
-      <div className="flex-grow">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ProductsPage />} />
-          <Route path="/shop/:category" element={<ProductsPage />} />
-          <Route path="/shop/filters" element={<FilterPage />} />
-        </Routes>
-      </div>
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ProductsPage />} />
+            <Route path="/shop/:category" element={<ProductsPage />} />
+            <Route path="/shop/filters" element={<FilterPage />} />
+          </Routes>
+        </div>
 
       <Footer />
     </>

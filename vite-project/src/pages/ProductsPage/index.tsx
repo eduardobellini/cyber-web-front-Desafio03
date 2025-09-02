@@ -81,11 +81,13 @@ const ProductsPage: React.FC = () => {
 
               <ProductGrid products={productsToDisplay} />
 
-              <Pagination 
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={page => setCurrentPage(page)}
-              />
+              <div className="flex justify-center">
+                    <Pagination 
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={page => setCurrentPage(page)}
+                    />
+              </div>
           </div>
       </div>
     </main>
