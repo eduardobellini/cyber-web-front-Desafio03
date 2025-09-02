@@ -1,17 +1,18 @@
 import React from 'react'
 
-import ButtonWhite from '../Buttons/buttonWhite';
 import iphoneImage from './assets/Iphone_Hero.png';
 import playstation5Image from './assets/PlayStation.png';
 import macbookAirImage from './assets/MacBookPro14.png';
 import airpodsMaxImage from './assets/airpodMax_hero.png';
 import visionProImage from './assets/image 36.png';
+import ButtonBlack from '../Buttons/buttonBlack';
+import ButtonWhite from '../Buttons/buttonWhite';
 
 const FullPageLayout = () => {
   return (
-    <div className="bg-white relative mb-24 ">
+    <div className="bg-white relative mb-56 ">
 
-      <div className="flex flex-col items-center justify-start bg-zinc-900 p-6 text-white md:min-h-[600px] md:flex-row md:justify-between md:py-0 md:pl-12 md:relative md:overflow-hidden">
+      <div className="flex flex-col items-center justify-start bg-zinc-900 p-6 text-white md:min-h-[500px] md:flex-row md:justify-between md:py-0 md:pl-12 md:relative md:overflow-hidden">
         <div className="flex flex-col w-full text-start md:items-start md:text-left md:pr-12 md:pb-24 md:z-10">
           <div className='flex-col text-center justify-center md:ml-[320px]'>
             <h2 className="text-lg font-bold text-zinc-400 md:mr-[320px] ">Pro.Beyond.</h2>
@@ -23,7 +24,7 @@ const FullPageLayout = () => {
             Created to change everything for the better. For everyone
           </p>
           <div className="mt-8">
-            <ButtonWhite name="Shop now" />
+            <ButtonBlack name="Shop now" />
           </div>
           </div>
         </div>
@@ -79,8 +80,8 @@ const FullPageLayout = () => {
             <p className="mt-4 max-w-sm text-base text-zinc-600">
               The new 15-inch MacBook Air makes room for more of what you love with a spacious Liquid Retina display.
             </p>
-            <div className="mt-8">
-              <button className="rounded-xl border border-zinc-300 px-10 py-3 text-sm font-normal transition-colors duration-200 hover:bg-zinc-200">Shop Now</button>
+            <div className='mt-8'>
+              <ButtonWhite name="Shop Now" />
             </div>
           </div>
         </div>
