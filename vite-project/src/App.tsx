@@ -4,6 +4,7 @@ import Footer from './components/Footer/footer';
 import Header from './components/Header/header';
 import CategoryBrowser from './components/CategoryBrowser/categoryBrowser';
 import BottomBanner from './components/BottomBanner/bottomBanner';
+import ShopNow from './components/ShopNow/shopNow';
 
 const sampleCategories = [
   { name: 'Phones', slug: 'phones', iconUrl: 'https://.../phone-icon.svg' },
@@ -27,6 +28,7 @@ function App() {
           <p>Conteúdo da sua página vai aqui...</p>
         </main>
         <CategoryBrowser categories={sampleCategories} />
+        <ShopNow/>
         <BottomBanner/>
         <Footer />
       </div>
