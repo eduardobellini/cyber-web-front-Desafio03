@@ -7,6 +7,7 @@ export interface Product {
   price: number;
   image: string;
   brand: string;
+  category: string;
 }
 
 interface ProductCardProps {

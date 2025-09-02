@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+// 1. Correção da Importação: Buscando o tipo do lugar certo.
+import { type BrandData } from '../../mocks/data';
 
 const FilterIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,6 +22,7 @@ interface ShopControlsProps {
     onSortOrderChange: (value: string) => void;
     category: string;
     totalProducts: number;
+    availableBrands: BrandData[];
 }
 
 const sortOptions = [
@@ -52,7 +55,7 @@ const SortDropdown: React.FC<Pick<ShopControlsProps, 'sortOrder' | 'onSortOrderC
             </button>
 
             {isDropdownOpen && (
-                <div className="absolute top-full mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-30">
+                <div className="absolute top-full mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-20"> {/* 2. Correção do Z-Index */}
                     {sortOptions.map(option => (
                         <button
                             key={option.value}
@@ -68,12 +71,13 @@ const SortDropdown: React.FC<Pick<ShopControlsProps, 'sortOrder' | 'onSortOrderC
     );
 }
 
-const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChange, category, totalProducts }) => {
+const ShopControls: React.FC<ShopControlsProps> = ({ sortOrder, onSortOrderChange, category, totalProducts, availableBrands }) => {
     return (
         <div className="flex items-center justify-between gap-4 mb-8">
             <div className="flex md:hidden items-center justify-between w-full gap-4">
                 <Link 
                     to={`/shop/filters?category=${category}`}
+                    state={{ availableBrands: availableBrands }}
                     className="
                         flex items-center justify-between
                         h-[56px] w-full rounded-lg border-[0.5px] border-[#D4D4D4] 
