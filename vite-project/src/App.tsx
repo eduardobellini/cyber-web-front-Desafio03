@@ -1,10 +1,8 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import Footer from './components/Footer/footer';
 import Header from './components/Header/header';
-import CategoryBrowser from './components/CategoryBrowser/categoryBrowser';
-import BottomBanner from './components/BottomBanner/bottomBanner';
-import ShopNow from './components/ShopNow/shopNow';
+
 
 const sampleCategories = [
   { name: 'Phones', slug: 'phones', iconUrl: 'https://.../phone-icon.svg' },
@@ -15,23 +13,26 @@ const sampleCategories = [
   { name: 'Cameras', slug: 'cameras', iconUrl: 'https://.../camera-icon.svg' },
   { name: 'Cameras', slug: 'cameras', iconUrl: 'https://.../camera-icon.svg' },
 ];
+import Footer from './components/Footer/footer';
+import HomePage from './pages/HomePage';
+import ProductsPage from './pages/ProductsPage';
+import FilterPage from './pages/FilterPage';
 
 function App() {
-
-
   return (
     <>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow pagina-principal">
-          <h1>Bem-vindo à Cyber</h1>
-          <p>Conteúdo da sua página vai aqui...</p>
-        </main>
-        <CategoryBrowser categories={sampleCategories} />
-        <ShopNow/>
-        <BottomBanner/>
-        <Footer />
-      </div>
+  <Header />
+
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ProductsPage />} />
+            <Route path="/shop/:category" element={<ProductsPage />} />
+            <Route path="/shop/filters" element={<FilterPage />} />
+          </Routes>
+        </div>
+
+      <Footer />
     </>
   );
 }
