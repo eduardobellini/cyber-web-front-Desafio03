@@ -1,11 +1,8 @@
-// src/pages/ProductDetailsPage/index.tsx
-
 import React from 'react';
 import ReviewSummary, { type ReviewSummaryData } from '../../components/ReviewSummary/reviewSummary';
 import ReviewList from '../../components/ReviewList/reviewList';
 import { type Review } from '../../components/ReviewCard/reviewCard';
 
-// Dados de exemplo (mantidos)
 const sampleSummary: ReviewSummaryData = {
   averageRating: 4.8,
   totalReviews: 125,
