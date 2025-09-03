@@ -3,6 +3,7 @@ import CategoryBrowser from '../../components/CategoryBrowser/categoryBrowser';
 import BottomBanner from '../../components/BottomBanner/bottomBanner';
 import FullHero from '../../components/Hero/FullHero';
 import ProductHome from '../../components/Products_Home/Products_Home';
+import DiscountProduct from '../../components/DiscountProducts/DiscountProducts';
 import ShopNow from '../../components/ShopNow/shopNow'
 
 const sampleCategories = [
@@ -23,6 +24,7 @@ const HomePage = () => {
       <CategoryBrowser categories={sampleCategories} />
       <ProductHome />
       <ShopNow/>
+      <DiscountProduct />
       <BottomBanner />
     </>
   );
