@@ -29,19 +29,12 @@ const sampleReviews: Review[] = [
 const ProductDetailsPage: React.FC = () => {
   return (
     <main className="container mx-auto px-6 py-12">
-      {/* Remove o h1 de teste */}
-      
-      {/* --- A ESTRUTURA AGORA É SIMPLESMENTE UM CONTAINER DE LARGURA FIXA/MÁXIMA --- */}
-      {/* O container deve ter uma largura que abranja todo o conteúdo de reviews */}
-      <div className="max-w-4xl mx-auto"> {/* max-w-4xl (aprox. 896px) é um bom ponto de partida */}
-        
-        {/* O título "Reviews" agora fica aqui, fora do ReviewSummary, como na imagem */}
+      <div className="max-w-4xl mx-auto">
+
         <h2 className="text-2xl font-semibold mb-6">Reviews</h2>
 
-        {/* O ReviewSummary vem primeiro, dentro do seu próprio container de fundo */}
         <ReviewSummary summary={sampleSummary} />
-        
-        {/* A ReviewList vem logo abaixo */}
+
         <ReviewList reviews={sampleReviews} />
       </div>
     </main>
