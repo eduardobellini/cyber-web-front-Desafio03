@@ -1,4 +1,3 @@
-// src/components/StarRating/index.tsx
 import React from 'react';
 
 const FullStar = () => (

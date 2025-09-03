@@ -1,5 +1,3 @@
-// src/components/ReviewList/index.tsx
-
 import React, { useState } from 'react';
 import ReviewCard, { type Review } from '../ReviewCard/reviewCard';
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-irregular-whitespace */
 import React, { useState } from 'react';
 
 const products = [

@@ -1,10 +1,7 @@
-// src/pages/ProductsPage/index.tsx
-
 import React, { useState, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 
-// 1. Imports corrigidos e padronizados
 import ShopControls from '../../components/ShopControls/shopControls';
 import FilterSidebar from '../../components/ShopControls/FilterSidebar/filterSideBar';
 import Breadcrumb from '../../components/BreadCrumb/breadCrumb';

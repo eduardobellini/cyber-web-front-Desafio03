@@ -1,5 +1,3 @@
-// src/components/ReviewSummary/index.tsx
-
 import React from 'react';
 import StarRating from '../StarRating/starRating';
 import RatingBar from '../RatingBar/ratingBar';
