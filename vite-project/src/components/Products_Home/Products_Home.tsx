@@ -89,7 +89,7 @@ const ProductGrid = () => {
     <div className="w-full mt-24">
       <div className="max-w-[1280px] mx-auto px-4 md:px-10">
         <div className="mb-6">
-          <nav className="flex gap-6 pl-4 md:pl-10">
+          <nav className="flex gap-6 pl-4 md:pl-10 ml-40">
             {navLinks.map((label) => (
               <button
                 key={label}

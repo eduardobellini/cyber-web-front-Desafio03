@@ -3,6 +3,7 @@ import CategoryBrowser from '../../components/CategoryBrowser/categoryBrowser';
 import BottomBanner from '../../components/BottomBanner/bottomBanner';
 import FullHero from '../../components/Hero/FullHero';
 import ProductHome from '../../components/Products_Home/Products_Home';
+import DiscountProduct from '../../components/DiscountProducts/DiscountProducts';
 
 const sampleCategories = [
   { name: 'Phones', slug: 'phones', iconUrl: 'https://.../phone-icon.svg' },
@@ -21,6 +22,7 @@ const HomePage = () => {
       <FullHero />
       <CategoryBrowser categories={sampleCategories} />
       <ProductHome />
+      <DiscountProduct />
       <BottomBanner />
     </>
   );
