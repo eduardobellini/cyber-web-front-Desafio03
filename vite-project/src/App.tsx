@@ -2,6 +2,17 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header/header';
+
+
+const sampleCategories = [
+  { name: 'Phones', slug: 'phones', iconUrl: 'https://.../phone-icon.svg' },
+  { name: 'Smart Watches', slug: 'smart-watches', iconUrl: 'https://.../watch-icon.svg' },
+  { name: 'Laptops', slug: 'laptops', iconUrl: 'https://.../laptop-icon.svg' },
+  { name: 'Tablets', slug: 'tablets', iconUrl: 'https://.../tablet-icon.svg' },
+  { name: 'Headphones', slug: 'headphones', iconUrl: 'https://.../headphones-icon.svg' },
+  { name: 'Cameras', slug: 'cameras', iconUrl: 'https://.../camera-icon.svg' },
+  { name: 'Cameras', slug: 'cameras', iconUrl: 'https://.../camera-icon.svg' },
+];
 import Footer from './components/Footer/footer';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
@@ -10,8 +21,7 @@ import FilterPage from './pages/FilterPage';
 function App() {
   return (
     <>
-      
-      <Header />
+  <Header />
 
         <div className="flex-grow">
           <Routes>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// 1. Correção da Importação: Buscando o tipo do lugar certo.
 import { type BrandData } from '../../mocks/data';
 
 const FilterIcon = () => (
