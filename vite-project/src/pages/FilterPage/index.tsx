@@ -68,7 +68,7 @@ const FilterPage: React.FC = () => {
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="block w-full pl-10 pr-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-100 focus:ring-red-500 focus:border-red-500 outline-none"
+                    className="block w-full pl-10 pr-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-100 focus:ring-gray-800 focus:border-gray-800 outline-none"
                     placeholder="Search Brand..."
                   />
                 </div>
@@ -82,7 +82,7 @@ const FilterPage: React.FC = () => {
                                         type="checkbox"
                                         checked={selectedBrands.includes(brandData.brand)}
                                         onChange={() => handleBrandChange(brandData.brand)}
-                                        className="h-5 w-5 rounded border-gray-300 text-red-500 focus:ring-red-500"
+                                        className="h-5 w-5 rounded border-gray-300 text-gray-800 focus:ring-offset-gray-800"
                                     />
                                     <span className="text-gray-700 font-medium">{brandData.brand}</span>
                                 </div>

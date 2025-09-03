@@ -18,7 +18,6 @@ export interface BrandData {
 }
 
 const FilterSidebar: React.FC<FilterSidebarProps> = ({ brands, selectedBrands, onBrandChange }) => {
-  // ... (todo o resto do código continua exatamente igual)
   const [searchTerm, setSearchTerm] = useState('');
   const [isBrandSectionOpen, setIsBrandSectionOpen] = useState(true);
 
@@ -51,7 +50,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ brands, selectedBrands, o
                             type="text"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="block w-full pl-10 pr-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-100 focus:ring-red-500 focus:border-red-500 outline-none"
+                            className="block w-full pl-10 pr-4 py-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-100 focus:ring-gray-800 focus:border-gray-800 outline-none"
                             placeholder="Search"
                         />
                     </div>
@@ -64,7 +63,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ brands, selectedBrands, o
                                     type="checkbox"
                                     checked={selectedBrands.includes(brandData.brand)}
                                     onChange={() => onBrandChange(brandData.brand)}
-                                    className="h-5 w-5 rounded border-gray-300 text-red-500 focus:ring-red-500"
+                                    className="h-5 w-5 rounded border-gray-300 text-gray-800 focus:ring-gray-800"
                                 />
                                 <span className="text-gray-700 text-base font-medium">{brandData.brand}</span>
                             </div>
