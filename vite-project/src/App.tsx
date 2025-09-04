@@ -17,6 +17,7 @@ import Footer from './components/Footer/footer';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import FilterPage from './pages/FilterPage';
+import MainInfo from './pages/F/201MainInfoTest'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/shop" element={<ProductsPage />} />
             <Route path="/shop/:category" element={<ProductsPage />} />
             <Route path="/shop/filters" element={<FilterPage />} />
+            <Route path='/product/:productId' element={<MainInfo/>}/>
           </Routes>
         </div>
 
