@@ -63,36 +63,38 @@ export default function MainInfo() {
 
   return (
     <div>
-      <div className="lg: flex w-[90%] ml-16">
-        <div className="w-full h-auto lg: flex">
-          <div className="hidden lg:flex justify-center  flex-col ml-5 items-center ">
-            <img
-              src={product[0].image}
-              alt="Imagem"
-              className="w-[74px] h-[66px]"
-            />
-            <img
-              src={product[0].image}
-              alt="Imagem"
-              className="w-[74px] h-[66px]"
-            />
-            <img
-              src={product[0].image}
-              alt="Imagem"
-              className="w-[74px] h-[66px]"
-            />
-            <img
-              src={product[0].image}
-              alt="Imagem"
-              className="w-[74px] h-[66px]"
-            />
-          </div>
-          <div className="flex justify-center lg: items-center">
-            <img
-              src={product[0].image}
-              alt="Imagem"
-              className="w-[263px] h-[329px] lg: w-[513px] h-[516px]"
-            />
+      <div className="lg:flex">
+        <div className="flex-col w-full h-auto">
+          <div className="lg:flex lg:justify-center lg:items-center">
+            <div className="hidden lg:flex flex-col ">
+              <img
+                src={product[0].image}
+                alt="Imagem"
+                className="w-[74px] h-[66px]"
+              />
+              <img
+                src={product[0].image}
+                alt="Imagem"
+                className="w-[74px] h-[66px]"
+              />
+              <img
+                src={product[0].image}
+                alt="Imagem"
+                className="w-[74px] h-[66px]"
+              />
+              <img
+                src={product[0].image}
+                alt="Imagem"
+                className="w-[74px] h-[66px]"
+              />
+            </div>
+            <div className="flex justify-center items-center">
+              <img
+                src={product[0].image}
+                alt="Imagem"
+                className="w-[263px] h-[329px] lg:w-[513px] lg:h-[516px]"
+              />
+            </div>
           </div>
           <div className="flex justify-around ml-7 mr-7 lg:hidden">
             <img
@@ -118,7 +120,7 @@ export default function MainInfo() {
           </div>
         </div>
         <div className="flex justify-center mt-5 ">
-          <div className="w-[90%] h-auto self-cente">
+          <div className="w-full h-auto lg:w-[90%]">
             <h1 className=" mr-4 font-bold text-[40px] leading-[40px]">
               {product[0].name}
             </h1>
@@ -140,7 +142,7 @@ export default function MainInfo() {
                       color.class
                     } ${
                       selectedColor === color.name
-                        ? "border-4 border-blue-500"
+                        ? "border-2 border-blue-500"
                         : "hover:border-2"
                     }`}
                     onClick={() => setSelectedColor(color.name)}
@@ -162,7 +164,7 @@ export default function MainInfo() {
                         memorie && (
                           <button
                             key={memorie}
-                            className={`w-[79px] h-[48px] border-2 rounded-lg mr-2 lg: w-[122px] gap-4${
+                            className={`w-[79px] h-[48px] border-2 rounded-lg mr-2 lg:w-[122px] ${
                               selectedMemory === memorie
                                 ? "border-black text-black"
                                 : "border-zinc-300 text-zinc-300"
@@ -176,67 +178,69 @@ export default function MainInfo() {
                   </div>
                 </div>
                 <div>
-                  <div className="mt-7 grid grid-cols-2 gap-4 lg: grid-cols-3">
-                    <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
-                      <img className="ml-3" src={ScrenSize} alt="" />
-                      <div className="ml-3">
-                        <h2 className="text-zinc-400 text-[14px] text-nowrap">
-                          Screen Size
-                        </h2>
-                        <h2 className="text-zinc-800">
-                          {product[0].screenSize}
-                        </h2>
+                  <div className="flex justify-center">
+                    <div className="mt-7 grid grid-cols-2 gap-2 lg:grid-cols-3">
+                      <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
+                        <img className="ml-3" src={ScrenSize} alt="" />
+                        <div className="ml-3">
+                          <h2 className="text-zinc-400 text-[14px] text-nowrap">
+                            Screen Size
+                          </h2>
+                          <h2 className="text-zinc-800">
+                            {product[0].screenSize}
+                          </h2>
+                        </div>
                       </div>
-                    </div>
-                    <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
-                      <img className="ml-3" src={cpuIcon} alt="" />
-                      <div className="ml-3">
-                        <h2 className="text-zinc-400 text-[14px] text-nowrap">
-                          CPU
-                        </h2>
-                        <h2 className="text-zinc-800">{product[0].cpu}</h2>
+                      <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
+                        <img className="ml-3" src={cpuIcon} alt="" />
+                        <div className="ml-3">
+                          <h2 className="text-zinc-400 text-[14px] text-nowrap">
+                            CPU
+                          </h2>
+                          <h2 className="text-zinc-800">{product[0].cpu}</h2>
+                        </div>
                       </div>
-                    </div>
-                    <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
-                      <img className="ml-3" src={coresIcon} alt="" />
-                      <div className="ml-3">
-                        <h2 className="text-zinc-400 text-[14px] text-nowrap">
-                          Number Of Cores
-                        </h2>
-                        <h2 className="text-zinc-800">
-                          {product[0].numberOfCores}
-                        </h2>
+                      <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
+                        <img className="ml-3" src={coresIcon} alt="" />
+                        <div className="ml-3">
+                          <h2 className="text-zinc-400 text-[14px] text-nowrap">
+                            Number Of Cores
+                          </h2>
+                          <h2 className="text-zinc-800">
+                            {product[0].numberOfCores}
+                          </h2>
+                        </div>
                       </div>
-                    </div>
-                    <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
-                      <img className="ml-3" src={mainCameraIcon} alt="" />
-                      <div className="ml-3">
-                        <h2 className="text-zinc-400 text-[14px] text-nowrap">
-                          Main Camera
-                        </h2>
-                        <h2 className="text-zinc-800">
-                          {product[0].mainCamera}
-                        </h2>
+                      <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
+                        <img className="ml-3" src={mainCameraIcon} alt="" />
+                        <div className="ml-3">
+                          <h2 className="text-zinc-400 text-[14px] text-nowrap">
+                            Main Camera
+                          </h2>
+                          <h2 className="text-zinc-800">
+                            {product[0].mainCamera}
+                          </h2>
+                        </div>
                       </div>
-                    </div>
-                    <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
-                      <img className="ml-3" src={frontCameraIcon} alt="" />
-                      <div className="ml-3">
-                        <h2 className="text-zinc-400 text-[14px] text-nowrap">
-                          Front Camera
-                        </h2>
-                        <h2 className="text-zinc-800">
-                          {product[0].frontCamera}
-                        </h2>
+                      <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
+                        <img className="ml-3" src={frontCameraIcon} alt="" />
+                        <div className="ml-3">
+                          <h2 className="text-zinc-400 text-[14px] text-nowrap">
+                            Front Camera
+                          </h2>
+                          <h2 className="text-zinc-800">
+                            {product[0].frontCamera}
+                          </h2>
+                        </div>
                       </div>
-                    </div>
-                    <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
-                      <img className="ml-3" src={bateryIcon} alt="" />
-                      <div className="ml-3">
-                        <h2 className="text-zinc-400  text-[14px] text-nowrap">
-                          Battery capacity
-                        </h2>
-                        <h2 className="text-zinc-800">{product[0].batery}</h2>
+                      <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg">
+                        <img className="ml-3" src={bateryIcon} alt="" />
+                        <div className="ml-3">
+                          <h2 className="text-zinc-400  text-[14px] text-nowrap">
+                            Battery capacity
+                          </h2>
+                          <h2 className="text-zinc-800">{product[0].batery}</h2>
+                        </div>
                       </div>
                     </div>
                   </div>
