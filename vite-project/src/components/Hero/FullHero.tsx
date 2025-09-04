@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 import iphoneImage from './assets/Iphone_Hero.png';
 import playstation5Image from './assets/PlayStation.png';
@@ -24,7 +25,9 @@ const FullPageLayout = () => {
             Created to change everything for the better. For everyone
           </p>
           <div className="mt-8">
-            <ButtonBlack name="Shop now" />
+            <Link to="/shop/phones">
+              <ButtonBlack name="Shop now" />
+            </Link>
           </div>
           </div>
         </div>
@@ -81,7 +84,9 @@ const FullPageLayout = () => {
               The new 15-inch MacBook Air makes room for more of what you love with a spacious Liquid Retina display.
             </p>
             <div className='mt-8'>
-              <ButtonWhite name="Shop Now" />
+              <Link to="/shop/computers">
+                <ButtonWhite name="Shop Now" />
+              </Link>
             </div>
           </div>
         </div>
