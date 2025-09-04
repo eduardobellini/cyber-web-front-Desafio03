@@ -83,8 +83,9 @@ const ProductHome: React.FC = () => {
                 alt={product.name}
                 className="w-20 h-20 object-contain mb-4 mx-auto"
               />
-              <div className="flex-1 flex flex-col items-center text-center mt-4">
+              <div className="flex flex-col items-center text-center mt-4 flex-grow">
                 <h2 className="text-base font-semibold mb-2">{product.name}</h2>
+                <div className='flex-grow'></div>
                 <span className="text-xl font-bold">${product.price}</span>
               </div>
               <Link to={`/product/${product.id}`}>

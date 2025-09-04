@@ -43,3 +43,18 @@ export const fetchProductsByTag = async (tag: string): Promise<Product[]> => {
     throw error;
   }
 };
+
+export const fetchDiscountedProducts = async (): Promise<Product[]> => {
+    try {
+        const response = await api.get('/products/discounted');
+        const productsFromApi = response.data.data;
+        const formattedProducts = productsFromApi.map((product: any) => ({
+          ...product,
+          image: product.url_image,
+        }));
+        return formattedProducts;
+    } catch (error) {
+        console.error("Failed to fetch discounted products:", error);
+        throw error;
+    }
+};
