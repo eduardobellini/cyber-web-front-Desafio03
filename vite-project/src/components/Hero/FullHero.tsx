@@ -25,7 +25,7 @@ const FullPageLayout = () => {
             Created to change everything for the better. For everyone
           </p>
           <div className="mt-8">
-            <Link to="/shop/phones">
+            <Link to="/shop/smartphones">
               <ButtonBlack name="Shop now" />
             </Link>
           </div>
