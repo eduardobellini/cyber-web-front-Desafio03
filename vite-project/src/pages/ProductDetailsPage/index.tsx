@@ -2,6 +2,7 @@ import React from 'react';
 import ReviewSummary, { type ReviewSummaryData } from '../../components/ReviewSummary/reviewSummary';
 import ReviewList from '../../components/ReviewList/reviewList';
 import { type Review } from '../../components/ReviewCard/reviewCard';
+import MainInfo from '../../components/MainInfo/mainInfo';
 
 const sampleSummary: ReviewSummaryData = {
   averageRating: 4.8,
@@ -26,6 +27,7 @@ const sampleReviews: Review[] = [
 const ProductDetailsPage: React.FC = () => {
   return (
     <main className="container mx-auto px-6 py-12">
+      <MainInfo/>
       <div className="max-w-4xl mx-auto">
 
         <h2 className="text-2xl font-semibold mb-6">Reviews</h2>
