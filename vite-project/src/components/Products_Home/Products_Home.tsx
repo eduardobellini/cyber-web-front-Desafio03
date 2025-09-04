@@ -87,7 +87,9 @@ const ProductHome: React.FC = () => {
                 <h2 className="text-base font-semibold mb-2">{product.name}</h2>
                 <span className="text-xl font-bold">${product.price}</span>
               </div>
-              <button className="bg-black text-white rounded-md px-6 py-2 mt-auto flex justify-center w-full whitespace-nowrap">Buy Now</button>
+              <Link to={`/product/${product.id}`}>
+                <button className="bg-black text-white rounded-md px-6 py-2 mt-auto flex justify-center w-full whitespace-nowrap">Buy Now</button>
+              </Link>
             </div>
           ))}
         </div>
