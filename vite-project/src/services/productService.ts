@@ -1,5 +1,5 @@
 import { api } from './api';
-import { type Product } from '../types';
+import { type Product, type ProductsResponse } from '../types'; 
 
 export const fetchProducts = async (
     category: string, 
@@ -7,21 +7,29 @@ export const fetchProducts = async (
     sort: string, 
     page: number, 
     pageSize: number
-): Promise<{ data: Product[], total: number }> => {
+): Promise<ProductsResponse> => {
   try {
     const order = sort === 'high-to-low' ? 'desc' : 'asc';
-    const response = await api.get(`/products/category/${category}`, {
+    
+    const response = await api.get('/products', {
         params: {
-            page,
-            sort: 'price',
-            order,
+            page: page,
             limit: pageSize,
-            brands: brands.join(','),
+            sort: 'price',
+            order: order,
+            brands: brands.length > 0 ? brands.join(',') : undefined,
+            category_name: category !== 'all' ? category : undefined,
         }
     });
-    return { 
-        data: response.data.data, 
-        total: response.data.metadata.total_items 
+
+    const formattedProducts = response.data.data.map((product: any) => ({
+      ...product,
+      image: product.url_image,
+    }));
+    
+    return {
+        data: formattedProducts,
+        metadata: response.data.metadata,
     };
   } catch (error) {
     console.error("Failed to fetch products:", error);

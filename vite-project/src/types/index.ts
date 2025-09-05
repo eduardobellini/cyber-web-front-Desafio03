@@ -29,3 +29,12 @@ export interface CategoriesResponse {
     current_page: number;
   };
 }
+
+export interface ProductsResponse {
+  data: Product[];
+  metadata: {
+    total_items: number;
+    total_pages: number;
+    current_page: number;
+  };
+}
