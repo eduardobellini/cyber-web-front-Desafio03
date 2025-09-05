@@ -5,7 +5,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { fetchProducts } from '../../services/productService';
 import { fetchBrandsByCategory } from '../../services/brandService';
 import ShopControls from '../../components/ShopControls/shopControls';
-import FilterSidebar, { type BrandData } from '../../components/ShopControls/FilterSidebar/filterSideBar';
+import FilterSidebar from '../../components/ShopControls/FilterSidebar/filterSideBar';
 import Breadcrumb from '../../components/BreadCrumb/breadCrumb';
 import ProductGrid from '../../components/ProductGrid/productGrid';
 import Pagination from '../../components/Pagination/pagination';

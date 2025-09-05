@@ -1,7 +1,5 @@
-// src/services/reviewService.ts
-
 import { api } from './api';
-import { type Review, type ReviewSummaryData, type ReviewsResponse } from '../types';
+import { type ReviewSummaryData, type ReviewsResponse } from '../types';
 
 export const fetchReviewsByProductId = async (productId: string): Promise<ReviewsResponse> => {
   try {

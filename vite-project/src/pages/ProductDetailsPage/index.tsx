@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductById } from '../../services/productService';
 import { fetchReviewsByProductId } from '../../services/reviewService';
+import { fetchRelatedProducts } from '../../services/productService';
 import Breadcrumb from '../../components/BreadCrumb/breadCrumb';
 import ReviewSummary from '../../components/ReviewSummary/reviewSummary';
 import ReviewList from '../../components/ReviewList/reviewList';
 import MainInfo from '../../components/MainInfo/mainInfo';
+import RelatedProducts from '../../components/RelatedProduct/relatedProduct';
 
 
 const ProductDetailsPage: React.FC = () => {
@@ -22,6 +24,11 @@ const ProductDetailsPage: React.FC = () => {
         queryKey: ['reviews', productId],
         queryFn: () => fetchReviewsByProductId(productId!),
         enabled: !!productId,
+    });
+    const { data: relatedProducts, isLoading: isLoadingRelated } = useQuery({
+        queryKey: ['relatedProducts', product?.brand],
+        queryFn: () => fetchRelatedProducts(product!.brand),
+        enabled: !!product, 
     });
 
     const breadcrumbPaths = product ? [
@@ -53,6 +60,11 @@ const ProductDetailsPage: React.FC = () => {
                     </>
                 )}
             </div>
+            
+            {isLoadingRelated && <div className="text-center p-8">Loading related products...</div>}
+            {relatedProducts && product && (
+                <RelatedProducts products={relatedProducts} currentProductId={product.id} />
+            )}
         </main>
     );
 };
