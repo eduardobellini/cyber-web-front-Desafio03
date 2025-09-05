@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
-import { mockBrandsByCategory } from '../../mocks/data';
 import { type BrandData } from '../../components/ShopControls/FilterSidebar/filterSideBar';
 
 const BackArrowIcon = () => (
