@@ -63,7 +63,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isFavorite, onToggle
         <div className="flex-grow" /> 
 
         <p className="text-2xl font-semibold text-center text-black leading-6 tracking-[.03em] mb-4">
-            ${product.price.toFixed(2)}
+            ${product.price}
         </p>
 
         <Link to={`/product/${product.id}`} className="w-full flex justify-center">
