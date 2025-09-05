@@ -1,29 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { fetchCategories } from '../../services/categoryService';
+
 import CategoryBrowser from '../../components/CategoryBrowser/categoryBrowser';
 import BottomBanner from '../../components/BottomBanner/bottomBanner';
 import FullHero from '../../components/Hero/FullHero';
 import ProductHome from '../../components/Products_Home/Products_Home';
 import DiscountProduct from '../../components/DiscountProducts/DiscountProducts';
-import ShopNow from '../../components/ShopNow/shopNow'
-
-const sampleCategories = [
-  { name: 'Phones', slug: 'phones', iconUrl: 'https://.../phone-icon.svg' },
-  { name: 'Smart Watches', slug: 'smart-watches', iconUrl: 'https://.../watch-icon.svg' },
-  { name: 'Laptops', slug: 'laptops', iconUrl: 'https://.../laptop-icon.svg' },
-  { name: 'Tablets', slug: 'tablets', iconUrl: 'https://.../tablet-icon.svg' },
-  { name: 'Headphones', slug: 'headphones', iconUrl: 'https://.../headphones-icon.svg' },
-  { name: 'Cameras', slug: 'cameras', iconUrl: 'https://.../camera-icon.svg' },
-  { name: 'Cameras', slug: 'cameras', iconUrl: 'https://.../camera-icon.svg' },
-
-];
+import ShopNow from '../../components/ShopNow/shopNow';
 
 const HomePage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data: categoriesResponse, isLoading, isError } = useQuery({
+    queryKey: ['categories', currentPage], 
+    queryFn: () => fetchCategories(currentPage),
+    placeholderData: keepPreviousData, 
+  });
+
+  const handleNextPage = () => {
+    if (categoriesResponse && categoriesResponse.metadata.current_page < categoriesResponse.metadata.total_pages) {
+      setCurrentPage(prevPage => prevPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  };
+
   return (
     <>
       <FullHero />
-      <CategoryBrowser categories={sampleCategories} />
+
+      {isLoading && <div className="text-center p-8">Loading Categories...</div>}
+      {isError && <div className="text-center p-8 text-red-500">Failed to load categories.</div>}
+      
+      {categoriesResponse && (
+        <CategoryBrowser 
+          categories={categoriesResponse.data}
+          currentPage={categoriesResponse.metadata.current_page}
+          totalPages={categoriesResponse.metadata.total_pages}
+          onNextPage={handleNextPage}
+          onPrevPage={handlePrevPage}
+        />
+      )}
+
       <ProductHome />
-      <ShopNow/>
+
+      <ShopNow />
       <DiscountProduct />
       <BottomBanner />
     </>

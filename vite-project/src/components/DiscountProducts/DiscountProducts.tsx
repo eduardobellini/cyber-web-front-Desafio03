@@ -1,31 +1,8 @@
 import React, { useState } from 'react';
-
-const products = [
-  {
-    id: 1,
-    name: 'Apple iPhone 14 Pro 512GB Gold (MQ233)',
-    price: '$1437',
-    image: '/images/iphone-gold.png',
-  },
-  {
-    id: 2,
-    name: 'AirPods Max Silver Starlight Aluminium',
-    price: '$549',
-    image: '/images/airpods-starlight.png',
-  },
-  {
-    id: 3,
-    name: 'Apple Watch Series 9 GPS 41mm Starlight Aluminium',
-    price: '$399',
-    image: '/images/watch-starlight.png',
-  },
-  {
-    id: 4,
-    name: 'Apple iPhone 14 Pro 1TB Gold (MQ2V3)',
-    price: '$1499',
-    image: '/images/iphone-1tb-gold.png',
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+import { fetchDiscountedProducts } from '../../services/productService';
+import { type Product } from '../../types';
 
 const HeartIcon = ({ filled }: { filled: boolean }) => (
   <svg
@@ -44,8 +21,13 @@ const HeartIcon = ({ filled }: { filled: boolean }) => (
   </svg>
 );
 
-const DiscountProduct = () => {
+const DiscountProduct: React.FC = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
+
+  const { data: products, isLoading, isError } = useQuery({
+    queryKey: ['products', 'discounted'],
+    queryFn: fetchDiscountedProducts,
+  });
 
   const toggleFavorite = (id: number) => {
     setFavorites((prev) =>
@@ -56,9 +38,13 @@ const DiscountProduct = () => {
   return (
     <div className="w-full mt-24 mb-20">
       <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-        <h1 className="text-2xl font-bold mb-6 ml-44">Discounts up to -50%</h1>
+        <h1 className="text-2xl font-bold mb-6">Discounts up to -50%</h1>
+
+        {isLoading && <div className="text-center p-8">Loading...</div>}
+        {isError && <div className="text-center p-8 text-red-500">Could not load products.</div>}
+
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4 w-fit mx-auto lg:grid-cols-[repeat(4,minmax(0,200px))]">
-          {products.map((product) => (
+          {products && products.map((product: Product) => (
             <div
               key={product.id}
               className="flex flex-col h-[340px] bg-zinc-200 bg-opacity-60 rounded-md shadow-md p-6 relative"
@@ -74,11 +60,16 @@ const DiscountProduct = () => {
                 alt={product.name}
                 className="w-20 h-20 object-contain mb-4 mx-auto"
               />
-              <div className="flex-1 flex flex-col items-center text-center mt-4">
+              <div className="flex flex-col items-center text-center mt-4 flex-grow">
                 <h2 className="text-base font-semibold mb-2">{product.name}</h2>
-                <span className="text-xl font-bold">{product.price}</span>
+                <div className='flex-grow'></div>
+                <span className="text-xl font-bold">${product.price}</span>
               </div>
-              <button className="bg-black text-white rounded-md px-6 py-2 mt-auto flex justify-center w-full whitespace-nowrap">Buy Now</button>
+              <Link to={`/product/${product.id}`} className="mt-auto w-full">
+                <button className="bg-black text-white rounded-md px-6 py-2 flex justify-center w-full whitespace-nowrap">
+                  Buy Now
+                </button>
+              </Link>
             </div>
           ))}
         </div>

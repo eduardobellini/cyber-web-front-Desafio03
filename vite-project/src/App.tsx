@@ -18,12 +18,14 @@ import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import FilterPage from './pages/FilterPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import ScrollToTop from './components/ScrollToTop/scrollToTop';
 import MainInfo from './components/MainInfo/mainInfo';
 
 function App() {
   return (
     <>
-  <Header />
+      <ScrollToTop />
+      <Header />
 
         <div className="flex-grow">
           <Routes>

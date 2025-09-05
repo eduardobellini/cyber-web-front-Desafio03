@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 import ButtonBlack from "../Buttons/buttonBlack";
 import ButtonWhite from "../Buttons/buttonWhite";
@@ -83,7 +84,9 @@ export default function ShopNow() {
           <h3 className="font-medium text-[14px] text-zinc-400 mt-5 mb-5">
             {slides[currentIndex].description}
           </h3>
-          <ButtonBlack name="Shop Now" />
+          <Link to="/shop">
+            <ButtonBlack name="Shop Now" />
+          </Link>
           <div className="flex justify-center mt-10 ">
             {slides.map((_, slideIndex) => (
               <div
@@ -118,7 +121,9 @@ export default function ShopNow() {
                 <h3 className="font-medium text-[14px] text-zinc-400 mt-5 mb-5 w-[296px]">
                   {slides[0].description}
                 </h3>
-                <ButtonBlack name="Shop Now"/>
+                <Link to="/shop/headphones">
+                  <ButtonBlack name="Shop Now"/>
+                </Link>
               </div>
             </div>
           </div>
@@ -137,7 +142,9 @@ export default function ShopNow() {
                 <h3 className="font-medium text-[14px] text-zinc-400 mt-5 mb-5 w-[296px]">
                   {slides[1].description}
                 </h3>
-                <ButtonBlack name="Shop Now"/>
+                <Link to="/shop/smartphones">
+                  <ButtonBlack name="Shop Now"/>
+                </Link>
               </div>
             </div>
           </div>
@@ -156,7 +163,9 @@ export default function ShopNow() {
                 <h3 className="font-medium text-[14px] text-zinc-400 mt-5 mb-5 w-[296px]">
                   {slides[2].description}
                 </h3>
-                <ButtonBlack name="Shop Now"/>
+                <Link to="/shop/smartphones">
+                  <ButtonBlack name="Shop Now"/>
+                </Link>
               </div>
             </div>
           </div>
@@ -175,7 +184,9 @@ export default function ShopNow() {
                 <h3 className="font-medium text-[14px] text-zinc-400 mt-5 mb-5 w-[296px]">
                   {slides[3].description}
                 </h3>
-                <ButtonWhite name="Shop Now"/>
+                <Link to="/shop/computers">
+                  <ButtonWhite name="Shop Now"/>
+                </Link>
               </div>
             </div>
           </div>

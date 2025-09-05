@@ -1,4 +1,5 @@
 import ButtonWhite from "../Buttons/buttonWhite"; 
+import { Link } from "react-router-dom";
 
 export default function BottomBanner() {
   return (
@@ -9,7 +10,9 @@ export default function BottomBanner() {
         <h3 className="text-zinc-500 mb-8">
           Commodo fames vitae vitae leo mauris in. Eu consequat.
         </h3>
-        <ButtonWhite name="Shop Now" />
+        <Link to="/shop">
+          <ButtonWhite name="Shop Now" />
+        </Link>
       </div>
       <div className="bg-[url('Assets/BottomBannerIMG.png')] bg-cover bg-center h-[32rem]  w-[23.4rem] justify-center text-center flex flex-col  items-center md:hidden">
         <h1 className="font-thin text-4xl text-white mb-5">Big Summer</h1>
@@ -17,7 +20,9 @@ export default function BottomBanner() {
         <h3 className="text-zinc-500 mb-8">
           Commodo fames vitae vitae leo mauris in. Eu consequat.
         </h3>
-        <ButtonWhite name="Shop Now" />
+        <Link to="/shop">
+          <ButtonWhite name="Shop Now" />
+        </Link>
       </div>
     </div>
   );
