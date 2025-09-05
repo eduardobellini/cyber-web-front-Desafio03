@@ -1,8 +1,12 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { fetchProductById } from '../../services/productService';
 import ReviewSummary, { type ReviewSummaryData } from '../../components/ReviewSummary/reviewSummary';
 import ReviewList from '../../components/ReviewList/reviewList';
 import { type Review } from '../../components/ReviewCard/reviewCard';
 import MainInfo from '../../components/MainInfo/mainInfo';
+import Breadcrumb from '../../components/BreadCrumb/breadCrumb';
 
 const sampleSummary: ReviewSummaryData = {
   averageRating: 4.8,
@@ -25,19 +29,39 @@ const sampleReviews: Review[] = [
 ];
 
 const ProductDetailsPage: React.FC = () => {
-  return (
-    <main className="container mx-auto px-6 py-12">
-      <MainInfo/>
-      <div className="max-w-4xl mx-auto">
+    const { productId } = useParams<{ productId: string }>();
 
-        <h2 className="text-2xl font-semibold mb-6">Reviews</h2>
+    const { data: product, isLoading, isError, error } = useQuery({
+        queryKey: ['product', productId],
+        queryFn: () => fetchProductById(productId!),
+        enabled: !!productId, 
+    });
 
-        <ReviewSummary summary={sampleSummary} />
+    const breadcrumbPaths = product ? [
+        { name: 'Shop', path: '/shop' },
+        { name: product.category.name, path: `/shop/${product.category.name.toLowerCase().replace(/ /g, '-')}` },
+        { name: product.brand, path: `/shop?brands=${product.brand}` },
+        { name: product.name, path: `/product/${product.id}` }
+    ] : [];
 
-        <ReviewList reviews={sampleReviews} />
-      </div>
-    </main>
-  );
+    if (isLoading) return <div className="text-center p-12">Loading product...</div>;
+    if (isError) return <div className="text-center p-12 text-red-500">Error: {(error as Error).message}</div>;
+
+    return (
+        <main className="container mx-auto px-6 py-12">
+            
+            <Breadcrumb customPaths={breadcrumbPaths} />
+            
+
+            {product && <MainInfo product={product} />}
+
+            <div className="max-w-4xl mx-auto mt-12">
+                <h2 className="text-2xl font-semibold mb-6">Reviews</h2>
+                <ReviewSummary summary={sampleSummary} />
+                <ReviewList reviews={sampleReviews} />
+            </div>
+        </main>
+    );
 };
 
 export default ProductDetailsPage;

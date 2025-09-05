@@ -5,7 +5,7 @@ export interface Product {
   price: number;
   image: string;
   brand: string;
-  category: string;
+  category: Category;
 }
 
 export interface BrandData {
