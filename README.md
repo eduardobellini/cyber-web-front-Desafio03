@@ -30,3 +30,11 @@ This project is a modern and responsive e-commerce landing page built with React
 - `npm run dev` to start the App
 - On browser: http://localhost:5173 (default port)
 note: for full functionality, **REQUIRES** use of `cyber-web-back` for integration of database
+
+# Participants
+
+- Eduardo Bellini
+- Elton Shinaider
+- Gabriel Jinkoski
+- Giovanna Macedo
+- Thierry Uchoa
