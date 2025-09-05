@@ -178,7 +178,7 @@
               {product.smartphoneSpecs && ( 
                 <div className="w-full h-auto mt-7">
                   <div>
-                    <div className="flex">
+                    <div className="flex justify-center">
                       <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
                         <div className="w-[166px] h-[64px] bg-zinc-100 flex items-center rounded-lg p-3">
                           <img className="w-6 h-6 mr-3" src={ScrenSize} alt="" />
