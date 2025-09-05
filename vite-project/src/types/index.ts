@@ -6,11 +6,6 @@ export interface Category {
   url_image: string;
 }
 
-export interface BrandData {
-  brand: string;
-  total: number;
-}
-
 export interface SmartphoneSpecs {
     screen_size: string | null;
     cpu: string | null;
@@ -45,6 +40,41 @@ export interface Product {
   colors: ProductColor[];
 }
 
+export interface Review {
+  id: number;
+  name_user: string;
+  url_image_user: string | null;
+  message: string;
+  rating: number;
+  created_at: string;
+}
+
+export interface BrandData {
+  brand: string;
+  total: number;
+}
+
+export interface ReviewSummaryData {
+  averageRating: number;
+  totalReviews: number;
+  ratingCounts: {
+    excellent: number;
+    good: number;
+    average: number;
+    belowAverage: number;
+    poor: number;
+  };
+}
+
+export interface CategoriesResponse {
+  data: Category[];
+  metadata: {
+    total_items: number;
+    total_pages: number;
+    current_page: number;
+  };
+}
+
 export interface ProductsResponse {
   data: Product[];
   metadata: {
@@ -52,4 +82,9 @@ export interface ProductsResponse {
     total_pages: number;
     current_page: number;
   };
+}
+
+export interface ReviewsResponse {
+  data: Review[];
+  summary: ReviewSummaryData;
 }

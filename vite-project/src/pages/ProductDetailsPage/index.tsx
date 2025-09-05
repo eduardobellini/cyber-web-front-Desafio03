@@ -2,27 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductById } from '../../services/productService';
+import { fetchReviewsByProductId } from '../../services/reviewService';
 import Breadcrumb from '../../components/BreadCrumb/breadCrumb';
-import ReviewSummary, { type ReviewSummaryData } from '../../components/ReviewSummary/reviewSummary';
+import ReviewSummary from '../../components/ReviewSummary/reviewSummary';
 import ReviewList from '../../components/ReviewList/reviewList';
-import { type Review } from '../../components/ReviewCard/reviewCard';
 import MainInfo from '../../components/MainInfo/mainInfo';
 
-const sampleSummary: ReviewSummaryData = {
-  averageRating: 4.8,
-  totalReviews: 125,
-  ratingCounts: {
-    excellent: 100,
-    good: 11,
-    average: 3,
-    belowAverage: 8,
-    poor: 1,
-  },
-};
-const sampleReviews: Review[] = [
-    { id: 1, name_user: 'Grace Carey', url_image_user: 'https://i.pravatar.cc/56?u=1', message: 'I was a bit nervous...', rating: 4.8, created_at: '24 January, 2023' },
-    // ...
-];
 
 const ProductDetailsPage: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
@@ -31,6 +16,12 @@ const ProductDetailsPage: React.FC = () => {
         queryKey: ['product', productId],
         queryFn: () => fetchProductById(productId!),
         enabled: !!productId, 
+    });
+    
+    const { data: reviewsResponse, isLoading: isLoadingReviews, isError: isErrorReviews } = useQuery({
+        queryKey: ['reviews', productId],
+        queryFn: () => fetchReviewsByProductId(productId!),
+        enabled: !!productId,
     });
 
     const breadcrumbPaths = product ? [
@@ -51,8 +42,16 @@ const ProductDetailsPage: React.FC = () => {
 
             <div className="max-w-4xl mx-auto mt-12">
                 <h2 className="text-2xl font-semibold mb-6">Reviews</h2>
-                <ReviewSummary summary={sampleSummary} />
-                <ReviewList reviews={sampleReviews} />
+
+                {isLoadingReviews && <div className="text-center p-8">Loading reviews...</div>}
+                {isErrorReviews && <div className="text-center p-8 text-red-500">Could not load reviews.</div>}
+                
+                {reviewsResponse && (
+                    <>
+                        <ReviewSummary summary={reviewsResponse.summary} />
+                        <ReviewList reviews={reviewsResponse.data} />
+                    </>
+                )}
             </div>
         </main>
     );

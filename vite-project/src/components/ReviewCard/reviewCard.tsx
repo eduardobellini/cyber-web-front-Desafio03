@@ -1,22 +1,21 @@
+// src/components/ReviewCard/index.tsx
+
 import React from 'react';
 import StarRating from '../StarRating/starRating';
-
-export interface Review {
-  id: number;
-  name_user: string;
-  url_image_user: string;
-  message: string;
-  rating: number;
-  created_at: string;
-}
+import { type Review } from '../../types';
 
 interface ReviewCardProps {
   review: Review;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
-  return (
+  const formattedDate = new Date(review.created_at).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
 
+  return (
     <div 
       className="
         flex gap-x-4 bg-[#FAFAFA] rounded-[10px] 
@@ -24,7 +23,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       "
     >
       <img 
-        src={review.url_image_user} 
+        src={review.url_image_user || 'https://i.pravatar.cc/56'}
         alt={review.name_user} 
         className="w-14 h-14 rounded-full object-cover flex-shrink-0"
       />
@@ -32,7 +31,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       <div className="flex flex-col gap-y-2 w-full">
         <div className="flex justify-between items-center">
           <h4 className="font-semibold text-gray-900">{review.name_user}</h4>
-          <p className="text-xs text-gray-500">{review.created_at}</p>
+          <p className="text-xs text-gray-500">{formattedDate}</p>
         </div>
 
         <StarRating rating={review.rating} />
