@@ -63,7 +63,7 @@ const DiscountProduct: React.FC = () => {
               <div className="flex flex-col items-center text-center mt-4 flex-grow">
                 <h2 className="text-base font-semibold mb-2">{product.name}</h2>
                 <div className='flex-grow'></div>
-                <span className="text-xl font-bold">${product.price}</span>
+                <span className="text-xl font-bold">${product.discounted_price}</span>
               </div>
               <Link to={`/product/${product.id}`} className="mt-auto w-full">
                 <button className="bg-black text-white rounded-md px-6 py-2 flex justify-center w-full whitespace-nowrap">
