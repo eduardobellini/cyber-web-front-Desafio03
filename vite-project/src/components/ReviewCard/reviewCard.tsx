@@ -1,5 +1,3 @@
-// src/components/ReviewCard/index.tsx
-
 import React from 'react';
 import StarRating from '../StarRating/starRating';
 import { type Review } from '../../types';
