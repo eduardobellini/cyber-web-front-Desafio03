@@ -107,7 +107,7 @@ export default function ShopNow() {
 
       <div className="hidden xl:block w-full h-[640px] mt-10">
         <div className="flex">
-          <div className="w-[360px] h-[640px] bg-zinc-100">
+          <div className="w-1/4 h-[640px] bg-zinc-100">
             <div className="w-full h-full flex flex-col justify-center items-center">
               
               <div
@@ -128,7 +128,7 @@ export default function ShopNow() {
             </div>
           </div>
 
-          <div className="w-[360px] h-[640px] bg-zinc-200">
+          <div className="w-1/4 h-[640px] bg-zinc-200">
             <div className="w-full h-full flex flex-col justify-center items-center">
               
               <div
@@ -149,7 +149,7 @@ export default function ShopNow() {
             </div>
           </div>
 
-          <div className="w-[360px] h-[640px] bg-zinc-300">
+          <div className="w-1/4 h-[640px] bg-zinc-300">
             <div className="w-full h-full flex flex-col justify-center items-center">
               
               <div
@@ -170,7 +170,7 @@ export default function ShopNow() {
             </div>
           </div>
 
-          <div className="w-[360px] h-[640px] bg-zinc-800">
+          <div className="w-1/4 h-[640px] bg-zinc-800">
             <div className="w-full h-full flex flex-col justify-center items-center">
               <div className=""></div>
               <div

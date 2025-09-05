@@ -5,43 +5,43 @@ import { fetchDiscountedProducts } from '../../services/productService';
 import { type Product } from '../../types';
 
 const HeartIcon = ({ filled }: { filled: boolean }) => (
- <svg
-  xmlns="http://www.w3.org/2000/svg"
-  fill={filled ? "#ec4899" : "none"}
-  viewBox="0 0 24 24"
-  stroke={filled ? "#ec4899" : "currentColor"}
-  className="w-6 h-6 transition-colors"
- >
-  <path
-   strokeLinecap="round"
-   strokeLinejoin="round"
-   strokeWidth={2}
-   d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
-  />
- </svg>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill={filled ? "#ec4899" : "none"}
+    viewBox="0 0 24 24"
+    stroke={filled ? "#ec4899" : "currentColor"}
+    className="w-6 h-6 transition-colors"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 21.364l-7.682-7.682a4.5 4.5 0 010-6.364z"
+    />
+  </svg>
 );
 
 const DiscountProduct: React.FC = () => {
- const [favorites, setFavorites] = useState<number[]>([]);
+  const [favorites, setFavorites] = useState<number[]>([]);
 
- const { data: products, isLoading, isError } = useQuery({
-  queryKey: ['products', 'discounted'],
-  queryFn: fetchDiscountedProducts,
- });
+  const { data: products, isLoading, isError } = useQuery({
+    queryKey: ['products', 'discounted'],
+    queryFn: fetchDiscountedProducts,
+  });
 
- const toggleFavorite = (id: number) => {
-  setFavorites((prev) =>
-   prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
-  );
- };
+  const toggleFavorite = (id: number) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
+    );
+  };
 
- return (
-  <div className="w-full mt-24 mb-20">
-   <div className="max-w-[1280px] mx-auto px-4 md:px-10">
-    <h1 className="text-2xl font-bold mb-6 md:ml-44">Discounts up to -50%</h1>
+  return (
+    <div className="w-full mt-24 mb-20">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-10">
+        <h1 className="text-2xl font-bold mb-6">Discounts up to -50%</h1>
 
-    {isLoading && <div className="text-center p-8">Loading...</div>}
-    {isError && <div className="text-center p-8 text-red-500">Could not load products.</div>}
+        {isLoading && <div className="text-center p-8">Loading...</div>}
+        {isError && <div className="text-center p-8 text-red-500">Could not load products.</div>}
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4 w-fit mx-auto lg:grid-cols-[repeat(4,minmax(0,200px))]">
           {products && products.map((product: Product) => (
@@ -75,11 +75,8 @@ const DiscountProduct: React.FC = () => {
           ))}
         </div>
       </div>
-     ))}
     </div>
-   </div>
-  </div>
- );
+  );
 };
 
 export default DiscountProduct;

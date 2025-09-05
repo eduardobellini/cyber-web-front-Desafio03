@@ -15,7 +15,7 @@ const FullPageLayout = () => {
    <div className="flex flex-col items-center justify-start bg-zinc-900 p-6 text-white md:min-h-[500px] md:flex-row md:justify-between md:py-0 md:pl-12 md:relative md:overflow-hidden">
     <div className="flex flex-col w-full text-start md:items-start md:text-left md:pr-12 md:pb-24 md:z-10">
      <div className="flex-col text-center justify-center md:text-left md:pl-48">
-      <h2 className="text-lg font-bold text-zinc-400">Pro.Beyond.</h2>
+      <h2 className="text-lg font-bold text-zinc-400">Pro.Beyond.</h2>  
       <div className="md:inline-block">
        <h1 className="text-5xl font-thin text-nowrap ml-12 md:text-7xl pr-10 md:ml-0 md:inline-block">
         iPhone 14
@@ -29,7 +29,7 @@ const FullPageLayout = () => {
       </p>
       <div className="mt-8">
        <Link to="/shop/smartphones">
-        <ButtonBlack name="Shop now" />
+        <ButtonWhite name="Shop now" />
        </Link>
       </div>
      </div>
@@ -117,7 +117,7 @@ const FullPageLayout = () => {
       </p>
       <div className="mt-8">
        <Link to="/shop/computers">
-        <ButtonWhite name="Shop Now" />
+        <ButtonBlack name="Shop Now" />
        </Link>
       </div>
      </div>
