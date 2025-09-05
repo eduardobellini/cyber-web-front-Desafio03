@@ -37,21 +37,45 @@
       setToastType(type);
     };
 
-    const areOptionsSelected = !!selectedColor && !!selectedMemory;
-
     const handleAddToCart = () => {
-      if (areOptionsSelected) {
+    const hasColorOptions = product.colors && product.colors.length > 0;
+    const hasStorageOptions = product.storageOptions && product.storageOptions.length > 0;
+
+    const isColorOk = !hasColorOptions || !!selectedColor;
+    const isStorageOk = !hasStorageOptions || !!selectedMemory;
+
+    if (isColorOk && isStorageOk) {
         showToast("Product added to cart", "success");
       } else {
-        showToast("Please select color and storage options", "error");
+        let missingOptions = [];
+        if (hasColorOptions && !selectedColor) {
+          missingOptions.push("color");
+        }
+        if (hasStorageOptions && !selectedMemory) {
+          missingOptions.push("storage");
+        }
+        showToast(`Please select ${missingOptions.join(' and ')}`, "error");
       }
     };
 
     const handleAddToWishlist = () => {
-      if (areOptionsSelected) {
+      const hasColorOptions = product.colors && product.colors.length > 0;
+      const hasStorageOptions = product.storageOptions && product.storageOptions.length > 0;
+
+      const isColorOk = !hasColorOptions || !!selectedColor;
+      const isStorageOk = !hasStorageOptions || !!selectedMemory;
+
+      if (isColorOk && isStorageOk) {
         showToast("Product added to wishlist", "success");
       } else {
-        showToast("Please select color and storage options", "error");
+        let missingOptions = [];
+        if (hasColorOptions && !selectedColor) {
+          missingOptions.push("color");
+        }
+        if (hasStorageOptions && !selectedMemory) {
+          missingOptions.push("storage");
+        }
+        showToast(`Please select ${missingOptions.join(' and ')}`, "error");
       }
     };
 

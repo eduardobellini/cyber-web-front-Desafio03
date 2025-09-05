@@ -81,3 +81,20 @@ export const fetchProductById = async (id: string): Promise<Product> => {
     throw error;
   }
 };
+
+export const fetchRelatedProducts = async (brandName: string): Promise<Product[]> => {
+  try {
+    const response = await api.get(`/products/brand/${brandName}`);
+    const productsFromApi = response.data; 
+
+    const formattedProducts = productsFromApi.map((product: any) => ({
+      ...product,
+      image: product.url_image,
+    }));
+    
+    return formattedProducts;
+  } catch (error) {
+    console.error(`Failed to fetch related products for brand "${brandName}":`, error);
+    throw error;
+  }
+};
