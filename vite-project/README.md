@@ -1,69 +1,31 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Cyber - E-commerce web page
 
-Currently, two official plugins are available:
+This project is a modern and responsive e-commerce landing page built with React and Typescript, using also Tailwind for responsive styling. It allows users to browse products, view categories, see product details, and interact with dynamic sections such as featured products, sales, product reviews, and others. The page was developed as part of a challenge for CompassUOL's Internship Program
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Technologies Used
 
-## Expanding the ESLint configuration
+- React
+- Typescript
+- Tailwind
+- axios
+- react-dom
+- react-icons
+- react-router-dom
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Main Functionalities
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Front page with main product categories
+- Direct links to product in sales
+- Filter by brand in shop page
+- Dynamic pagination for filters
+- Product page with dynamic specifications on products from our database 
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+# How to setup
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- clone `cyber-web-front` repository on your environment
+- Open `cyber-web-front/vite-project` folder on your terminal of choice
+- `npm i` to install the project's dependencies
+- `npm run dev` to start the App
+- On browser: http://localhost:5173 (default port)
+note: for full functionality, **REQUIRES** use of `cyber-web-back` for integration of database
