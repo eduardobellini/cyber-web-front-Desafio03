@@ -12,7 +12,10 @@ import ScrollToTop from './components/ScrollToTop/scrollToTop';
 import ShoppingCart from './components/CartShop/cartShop';
 import UserProfilePage from './pages/ProfilePage';
 import ProtectedRoute from './components/ProtectedRoute';
-
+import AddressStep from './components/AdressesSteps/AdressesSteps';
+import ShippingStep from './components/AdressesSteps/ShippingStep';
+import PaymentStep from './components/AdressesSteps/Paymeant';
+// 🔐 Componentes de autenticação do Clerk
 import { SignIn, SignUp } from '@clerk/clerk-react';
 
 function App() {
@@ -51,6 +54,30 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ShoppingCart />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/address" 
+              element={
+                <ProtectedRoute>
+                  <AddressStep />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/shipping" 
+              element={
+                <ProtectedRoute>
+                  <ShippingStep />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/payment" 
+              element={
+                <ProtectedRoute>
+                  <PaymentStep />
                 </ProtectedRoute>
               } 
             />

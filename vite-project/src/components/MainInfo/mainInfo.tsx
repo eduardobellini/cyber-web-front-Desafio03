@@ -79,7 +79,7 @@ const MainInfo: React.FC<MainInfoProps> = ({ product, userId }) => {
       return;
     }
 
-    console.log('🔍 Product details:', {
+    console.log(' Product details:', {
       id: product.id,
       name: product.name,
       selectedColor,
@@ -95,14 +95,14 @@ const MainInfo: React.FC<MainInfoProps> = ({ product, userId }) => {
         memory: selectedMemory || undefined,
       }, userId);
 
-      showToast("✅ Produto adicionado ao carrinho!", "success");
+      showToast(" Product added to cart", "success");
       
       setTimeout(() => {
         navigate("/cart");
       }, 1500);
       
     } catch (error) {
-      console.error('💥 Erro ao adicionar ao carrinho:', {
+      console.error(' Error adding to cart:', {
         error: error instanceof Error ? error.message : error,
         productId: product.id,
         userId,
@@ -110,7 +110,7 @@ const MainInfo: React.FC<MainInfoProps> = ({ product, userId }) => {
       });
       
       const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
-      showToast(`❌ ${errorMessage}`, "error");
+      showToast(` ${errorMessage}`, "error");
     }
   };
 

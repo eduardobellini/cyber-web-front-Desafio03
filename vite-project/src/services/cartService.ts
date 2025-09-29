@@ -32,7 +32,7 @@ class CartService {
 
  
   async testAPI(): Promise<void> {
-    console.log('🔍 Testing API endpoints...');
+    console.log(' Testing API endpoints...');
     
     const endpoints = [
       '/products',
@@ -45,7 +45,7 @@ class CartService {
         const response = await fetch(`${this.baseUrl}${endpoint}`);
         console.log(`📡 ${endpoint}: ${response.status} ${response.statusText}`);
       } catch (error) {
-        console.error(`❌ ${endpoint}: Network error`, error);
+        console.error(` ${endpoint}: Network error`, error);
       }
     }
   }
@@ -74,7 +74,7 @@ class CartService {
   async checkProduct(productId: string): Promise<boolean> {
     try {
       const response = await fetch(`${this.baseUrl}/products/${productId}`);
-      console.log('🔍 Product check response:', response.status);
+      console.log(' Product check response:', response.status);
       return response.ok;
     } catch (error) {
       console.error(' Error checking product:', error);
@@ -85,28 +85,28 @@ class CartService {
   async getCart(userId?: string): Promise<CartResponse> {
     const id = userId || getCurrentUserId();
     
-    console.log('📦 Fetching cart for user:', id);
-    console.log('📡 GET request to:', `${this.baseUrl}/cart/${id}`);
+    console.log(' Fetching cart for user:', id);
+    console.log(' GET request to:', `${this.baseUrl}/cart/${id}`);
     
     const response = await fetch(`${this.baseUrl}/cart/${id}`);
     
-    console.log('📦 Cart fetch response status:', response.status);
+    console.log(' Cart fetch response status:', response.status);
     
     if (!response.ok) {
       if (response.status === 404) {
-        console.log('📦 No cart found for user, returning empty cart');
+        console.log(' No cart found for user, returning empty cart');
         return {
           items: [],
           totalItems: 0,
           totalPrice: 0
         };
       }
-      console.error('📦 Failed to fetch cart:', response.status, response.statusText);
+      console.error(' Failed to fetch cart:', response.status, response.statusText);
       throw new Error('Failed to fetch cart');
     }
     
     const cartData = await response.json();
-    console.log('📦 Cart data received:', cartData);
+    console.log(' Cart data received:', cartData);
     
     return cartData;
   }
@@ -123,7 +123,7 @@ class CartService {
    
     const productExists = await this.checkProduct(item.productId);
     if (!productExists) {
-      console.warn('⚠️ Product may not exist in database:', item.productId);
+      console.warn(' Product may not exist in database:', item.productId);
     }
     
    
@@ -135,10 +135,10 @@ class CartService {
       ...(item.memory && { memory: String(item.memory) })     
     };
 
-    console.log('🛒 Adding to cart - Payload:', JSON.stringify(payload, null, 2));
-    console.log('🛒 API URL:', `${this.baseUrl}/cart`);
-    console.log('🔍 Original item data:', item);
-    console.log('🆔 Product ID type:', typeof item.productId, 'Value:', item.productId);
+    console.log(' Adding to cart - Payload:', JSON.stringify(payload, null, 2));
+    console.log(' API URL:', `${this.baseUrl}/cart`);
+    console.log(' Original item data:', item);
+    console.log(' Product ID type:', typeof item.productId, 'Value:', item.productId);
 
     try {
       const response = await fetch(`${this.baseUrl}/cart`, {
@@ -149,8 +149,8 @@ class CartService {
         body: JSON.stringify(payload),
       });
 
-      console.log('📡 Response status:', response.status);
-      console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+      console.log(' Response status:', response.status);
+      console.log(' Response headers:', Object.fromEntries(response.headers.entries()));
 
       if (!response.ok) {
         let errorDetails;
@@ -162,7 +162,7 @@ class CartService {
           errorDetails = await response.text();
         }
         
-        console.error('❌ Cart API Error Details:', {
+        console.error(' Cart API Error Details:', {
           status: response.status,
           statusText: response.statusText,
           error: errorDetails,
@@ -186,13 +186,13 @@ class CartService {
       let responseData;
       try {
         responseData = await response.json();
-        console.log('✅ Item added to cart successfully. Response:', responseData);
+        console.log(' Item added to cart successfully. Response:', responseData);
       } catch {
-        console.log('✅ Item added to cart successfully (no response body)');
+        console.log(' Item added to cart successfully (no response body)');
       }
       
     } catch (error) {
-      console.error('💥 Network/Parse Error:', error);
+      console.error(' Network/Parse Error:', error);
       throw error;
     }
   }

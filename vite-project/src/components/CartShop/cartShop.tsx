@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cartService } from '../../services/cartService';
 import { getCurrentUserId } from '../../utils/userConfig';
 
@@ -7,6 +8,8 @@ type Quantities = { [key: string]: number };
 const userId = getCurrentUserId(); 
 
 const ShoppingCart: React.FC = () => {
+  const navigate = useNavigate();
+  
   type CartItem = {
     id: number;
     product: {
@@ -25,16 +28,16 @@ const ShoppingCart: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 🛒 Busca os dados do carrinho do usuário
+
   const fetchCart = useCallback(async () => {
-    console.log('🔄 CartShop: Starting to fetch cart...');
+    console.log(' CartShop: Starting to fetch cart...');
     setLoading(true);
     setError(null);
     try {
       const data = await cartService.getCart(userId);
       
-      console.log('🔄 CartShop: Received cart data:', data);
-      console.log('🔄 CartShop: Number of items:', data.items.length);
+      console.log(' CartShop: Received cart data:', data);
+      console.log(' CartShop: Number of items:', data.items.length);
 
       setCartItems(data.items);
 
@@ -44,13 +47,13 @@ const ShoppingCart: React.FC = () => {
       });
       setQuantities(initialQuantities);
       
-      console.log('🔄 CartShop: Updated state with', data.items.length, 'items');
+      console.log(' CartShop: Updated state with', data.items.length, 'items');
     } catch (err: unknown) {
-      console.error('🔄 CartShop: Error fetching cart:', err);
+      console.error(' CartShop: Error fetching cart:', err);
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('Ocorreu um erro ao buscar o carrinho');
+        setError('An error occurred when searching for the cart');
       }
     } finally {
       setLoading(false);
@@ -74,7 +77,7 @@ const ShoppingCart: React.FC = () => {
 
       await fetchCart(); 
     } catch (error) {
-      alert("Erro ao atualizar quantidade");
+      alert("Error updating quantity");
       console.error(error);
     }
   };
@@ -85,10 +88,17 @@ const ShoppingCart: React.FC = () => {
       await cartService.removeItem(cartItemId);
       await fetchCart(); 
     } catch (error) {
-      alert("Erro ao remover item");
+      alert("Error removing item");
       console.error(error);
     }
   };
+  
+ 
+  const handleCheckout = () => {
+    console.log('Redirecting to address page.');
+    navigate('/address');
+  };
+  
   
   const calculateTotals = () => {
     const subtotal = cartItems.reduce((acc, item) => {
@@ -105,16 +115,16 @@ const ShoppingCart: React.FC = () => {
 
   const { subtotal, estimatedTax, shipping, total } = calculateTotals();
 
-  if (loading) return <div className="text-center p-12">🔄 Carregando carrinho...</div>;
-  if (error) return <div className="text-center p-12 text-red-500">❌ Erro: {error}</div>;
-  if (cartItems.length === 0) return <div className="text-center p-12">🛒 Seu carrinho está vazio</div>;
+  if (loading) return <div className="text-center p-12"> Loading cart... </div>;
+  if (error) return <div className="text-center p-12 text-red-500"> Error: {error} </div>;
+  if (cartItems.length === 0) return <div className="text-center p-12">🛒 Your cart is empty</div>;
 
   return (
     <div className="bg-white p-8 font-sans max-w-6xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold mb-6">🛒 Carrinho de Compras</h2>
+          <h2 className="text-2xl font-semibold mb-6"> Shopping Cart</h2>
           {cartItems.map(item => (
             <div key={item.id} className="flex items-start justify-between border-b pb-6">
               <div className="flex items-center space-x-4">
@@ -143,7 +153,7 @@ const ShoppingCart: React.FC = () => {
                   <button
                     onClick={() => handleQuantityChange(item.id, item.product.id, (quantities[item.product.id] || 1) + 1)}
                     className="px-3 py-1 text-gray-600 hover:bg-gray-100"
-                    aria-label={`Aumentar quantidade de ${item.product.name}`}
+                    aria-label={`Increase quantity of ${item.product.name}`}
                   >
                     +
                   </button>
@@ -221,8 +231,11 @@ const ShoppingCart: React.FC = () => {
           </div>
 
           
-          <button className="mt-8 w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition">
-            Checkout
+          <button 
+            onClick={handleCheckout}
+            className="mt-8 w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
+          >
+            🛒 Checkout
           </button>
         </div>
       </div>

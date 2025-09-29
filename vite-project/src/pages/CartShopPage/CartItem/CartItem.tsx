@@ -6,7 +6,6 @@ type CartItemType = {
   quantity: number;
   product: {
     name: string;
-    // Add other product fields as needed
   };
 };
 
@@ -22,7 +21,7 @@ const CartItem = ({ item, userId }: { item: CartItemType; userId: string }) => {
       body: JSON.stringify({ quantity: newQuantity }),
     });
     if (!res.ok) {
-      alert("Erro ao atualizar quantidade");
+      alert("Error updating quantity");
       return;
     }
     setQuantity(newQuantity);
@@ -34,7 +33,7 @@ const CartItem = ({ item, userId }: { item: CartItemType; userId: string }) => {
       method: "DELETE",
     });
     if (!res.ok) {
-      alert("Erro ao remover item");
+      alert("Error removing item");
       return;
     }
     queryClient.invalidateQueries({ queryKey: ["cart", userId] });
@@ -43,10 +42,10 @@ const CartItem = ({ item, userId }: { item: CartItemType; userId: string }) => {
   return (
     <div>
       <h3>{item.product.name}</h3>
-      <p>Quantidade: {quantity}</p>
+      <p>Quantity: {quantity}</p>
       <button onClick={() => updateQuantity(quantity - 1)}>-</button>
       <button onClick={() => updateQuantity(quantity + 1)}>+</button>
-      <button onClick={removeItem}>Remover</button>
+      <button onClick={removeItem}>Remove</button>
     </div>
   );
 };

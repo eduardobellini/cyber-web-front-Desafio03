@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-const userId = '1'; // Use o ID correto do usuário aqui
+const userId = '1'; 
 
 type CartItem = {
   id: number;
@@ -21,7 +21,7 @@ type CartResponse = {
 
 const fetchCart = async (): Promise<CartResponse> => {
   const res = await fetch(`http://localhost:7777/api/cart/${userId}`);
-  if (!res.ok) throw new Error('Erro ao buscar o carrinho');
+  if (!res.ok) throw new Error('Error when fetching the cart');
   return res.json();
 };
 
@@ -41,7 +41,7 @@ const CartPage: React.FC = () => {
       body: JSON.stringify({ quantity: newQuantity }),
     });
     if (!res.ok) {
-      alert('Erro ao atualizar quantidade');
+      alert('Error when updating quantity');
       return;
     }
     queryClient.invalidateQueries({ queryKey: ['cart', userId] });
@@ -52,31 +52,31 @@ const CartPage: React.FC = () => {
       method: 'DELETE',
     });
     if (!res.ok) {
-      alert('Erro ao remover item');
+      alert('Error when removing item');
       return;
     }
     queryClient.invalidateQueries({ queryKey: ['cart', userId] });
   };
 
-  if (isLoading) return <p>Carregando carrinho...</p>;
-  if (isError) return <p>Erro: {(error as Error).message}</p>;
+  if (isLoading) return <p>Loading cart...</p>;
+  if (isError) return <p>Error: {(error as Error).message}</p>;
 
   const cartItems = data?.items || [];
 
-  if (cartItems.length === 0) return <p>Seu carrinho está vazio.</p>;
+  if (cartItems.length === 0) return <p>Your cart is empty.</p>;
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl mb-6">Seu Carrinho</h1>
+      <h1 className="text-2xl mb-6">Your Cart</h1>
       {cartItems.map((item: CartItem) => (
         <div key={item.id} className="flex items-center justify-between border-b py-4">
           <div className="flex items-center space-x-4">
             <img src={item.product.url_image} alt={item.product.name} className="w-20 h-20 object-cover" />
             <div>
               <p className="font-semibold">{item.product.name}</p>
-              {item.color && <p>Cor: {item.color}</p>}
-              {item.memory && <p>Memória: {item.memory}</p>}
-              <p>Preço unitário: ${item.product.price.toFixed(2)}</p>
+              {item.color && <p>Color: {item.color}</p>}
+              {item.memory && <p>Memory: {item.memory}</p>}
+              <p>Unit Price: ${item.product.price.toFixed(2)}</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
@@ -97,12 +97,11 @@ const CartPage: React.FC = () => {
               onClick={() => removeItem(item.id)}
               className="px-3 py-1 bg-red-500 text-white rounded"
             >
-              Remover
+              Remove
             </button>
           </div>
         </div>
       ))}
-      {/* Aqui você pode adicionar o resumo do pedido e botão de checkout */}
     </div>
   );
 };

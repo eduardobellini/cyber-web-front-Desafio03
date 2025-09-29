@@ -8,7 +8,7 @@ const UserProfilePage: React.FC = () => {
         <div className="bg-white rounded-lg shadow">
           <div className="px-4 py-5 sm:p-6">
             <h1 className="text-2xl font-bold text-gray-900 mb-6">
-              👤 Meu Perfil
+              👤 My Profile
             </h1>
             
            
