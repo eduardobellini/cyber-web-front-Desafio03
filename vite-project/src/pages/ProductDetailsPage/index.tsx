@@ -45,7 +45,7 @@ const ProductDetailsPage: React.FC = () => {
         <main className="container mx-auto px-6 py-12">
             <Breadcrumb customPaths={breadcrumbPaths} />
 
-            {product && <MainInfo product={product} />}
+            {product && <MainInfo product={product} userId={"yourUserIdHere"} />}
 
             <div className="max-w-4xl mx-auto mt-12">
                 <h2 className="text-2xl font-semibold mb-6">Reviews</h2>

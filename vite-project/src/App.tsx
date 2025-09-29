@@ -10,6 +10,7 @@ import ProductsPage from './pages/ProductsPage';
 import FilterPage from './pages/FilterPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import ScrollToTop from './components/ScrollToTop/scrollToTop';
+import ShoppingCart from './components/CartShop/cartShop';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/shop/:category" element={<ProductsPage />} />
             <Route path="/shop/filters" element={<FilterPage />} />
             <Route path="/product/:productId" element={<ProductDetailsPage />} />
+            <Route path="/cart" element={<ShoppingCart />} /> 
           </Routes>
         </div>
 
