@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { cartService } from '../../services/cartService';
+import { getCurrentUserId } from '../../utils/userConfig';
 
 type Quantities = { [key: string]: number };
 
-const userId = 'user123'; // Use o ID do usuário real
+const userId = getCurrentUserId(); 
 
 const ShoppingCart: React.FC = () => {
   type CartItem = {
@@ -18,28 +20,33 @@ const ShoppingCart: React.FC = () => {
     memory?: string;
   };
   
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [quantities, setQuantities] = useState<Quantities>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Busca os dados do carrinho do usuário
-  const fetchCart = async () => {
+  // 🛒 Busca os dados do carrinho do usuário
+  const fetchCart = useCallback(async () => {
+    console.log('🔄 CartShop: Starting to fetch cart...');
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:7777/api/cart/${userId}`);
-      if (!res.ok) throw new Error('Falha ao buscar carrinho');
-      const data = await res.json();
+      const data = await cartService.getCart(userId);
+      
+      console.log('🔄 CartShop: Received cart data:', data);
+      console.log('🔄 CartShop: Number of items:', data.items.length);
 
       setCartItems(data.items);
 
       const initialQuantities: Quantities = {};
-      data.items.forEach((item: CartItem) => {
+      data.items.forEach((item) => {
         initialQuantities[item.product.id] = item.quantity;
       });
       setQuantities(initialQuantities);
+      
+      console.log('🔄 CartShop: Updated state with', data.items.length, 'items');
     } catch (err: unknown) {
+      console.error('🔄 CartShop: Error fetching cart:', err);
       if (err instanceof Error) {
         setError(err.message);
       } else {
@@ -48,59 +55,49 @@ const ShoppingCart: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchCart();
-  }, []);
+  }, [fetchCart]);
 
-  // Atualiza a quantidade de um item (chama back-end PUT)
+  
   const handleQuantityChange = async (cartItemId: number, productId: string, newQuantity: number) => {
     if (newQuantity < 1) return;
     try {
-      const res = await fetch(`http://localhost:7777/api/cart/item/${cartItemId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantity: newQuantity }),
-      });
-      if (!res.ok) throw new Error("Erro ao atualizar quantidade");
+      await cartService.updateItemQuantity(cartItemId, newQuantity);
       
       setQuantities(prev => ({
         ...prev,
         [productId]: newQuantity,
       }));
 
-      await fetchCart(); // Atualiza lista do carrinho
+      await fetchCart(); 
     } catch (error) {
       alert("Erro ao atualizar quantidade");
       console.error(error);
     }
   };
 
-  // Remove um item do carrinho (chama back-end DELETE)
+  
   const handleRemoveItem = async (cartItemId: number) => {
     try {
-      const res = await fetch(`http://localhost:7777/api/cart/item/${cartItemId}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Erro ao remover item");
-      
-      await fetchCart(); // Atualiza lista do carrinho
+      await cartService.removeItem(cartItemId);
+      await fetchCart(); 
     } catch (error) {
       alert("Erro ao remover item");
       console.error(error);
     }
   };
-
-  // Calcula subtotais e totais baseados nos itens e quantidades
+  
   const calculateTotals = () => {
     const subtotal = cartItems.reduce((acc, item) => {
       const quantity = quantities[item.product.id] || 0;
       return acc + item.product.price * quantity;
     }, 0);
 
-    const estimatedTax = 50;
-    const shipping = 29;
+    const estimatedTax = 50; 
+    const shipping = 29; 
     const total = subtotal + estimatedTax + shipping;
 
     return { subtotal, estimatedTax, shipping, total };
@@ -108,16 +105,16 @@ const ShoppingCart: React.FC = () => {
 
   const { subtotal, estimatedTax, shipping, total } = calculateTotals();
 
-  if (loading) return <div className="text-center p-12">Carregando carrinho...</div>;
-  if (error) return <div className="text-center p-12 text-red-500">Erro: {error}</div>;
-  if (cartItems.length === 0) return <div className="text-center p-12">Seu carrinho está vazio</div>;
+  if (loading) return <div className="text-center p-12">🔄 Carregando carrinho...</div>;
+  if (error) return <div className="text-center p-12 text-red-500">❌ Erro: {error}</div>;
+  if (cartItems.length === 0) return <div className="text-center p-12">🛒 Seu carrinho está vazio</div>;
 
   return (
     <div className="bg-white p-8 font-sans max-w-6xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Shopping Cart Section */}
+        
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold mb-6">Shopping Cart</h2>
+          <h2 className="text-2xl font-semibold mb-6">🛒 Carrinho de Compras</h2>
           {cartItems.map(item => (
             <div key={item.id} className="flex items-start justify-between border-b pb-6">
               <div className="flex items-center space-x-4">
@@ -128,7 +125,6 @@ const ShoppingCart: React.FC = () => {
                 />
                 <div className="flex-1">
                   <h3 className="text-lg font-medium">{item.product.name}</h3>
-                  {/* Exibir opções selecionadas, se tiver */}
                   {item.color && <p className="text-sm text-gray-500">Color: {item.color}</p>}
                   {item.memory && <p className="text-sm text-gray-500">Storage: {item.memory}</p>}
                 </div>
@@ -172,11 +168,11 @@ const ShoppingCart: React.FC = () => {
           ))}
         </div>
 
-        {/* Order Summary Section */}
+        
         <div className="bg-gray-50 p-8 rounded-lg shadow-sm">
           <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
 
-          {/* Discount/Promo Code */}
+          
           <div className="mb-6">
             <label className="text-sm font-medium text-gray-700">Discount code / Promo code</label>
             <input
@@ -186,7 +182,7 @@ const ShoppingCart: React.FC = () => {
             />
           </div>
 
-          {/* Bonus Card Number */}
+          
           <div className="mb-6">
             <label className="text-sm font-medium text-gray-700">Your bonus card number</label>
             <div className="flex mt-1">
@@ -201,7 +197,7 @@ const ShoppingCart: React.FC = () => {
             </div>
           </div>
 
-          {/* Totals */}
+         
           <div className="space-y-4 text-sm text-gray-700">
             <div className="flex justify-between">
               <span>Subtotal</span>
@@ -224,7 +220,7 @@ const ShoppingCart: React.FC = () => {
             <span>${total.toFixed(2)}</span>
           </div>
 
-          {/* Checkout Button */}
+          
           <button className="mt-8 w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition">
             Checkout
           </button>

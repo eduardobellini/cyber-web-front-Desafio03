@@ -5,14 +5,9 @@ import NavItemMobile from "./navItemMobile";
 
 import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
-import { 
-  SignedIn, 
-  SignedOut, 
-  SignInButton, 
-  UserButton
-} from "@clerk/clerk-react";
+import { CiUser } from "react-icons/ci";
 
-export default function Header() {
+export default function HeaderWithoutClerk() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -53,6 +48,7 @@ export default function Header() {
               </div>
             </div>
           </div>
+
           <div className="hidden xl:flex items-center ml-4 text-center w-auto pr-10">
             <ul className="flex space-x-20 font-medium text-gray-500 whitespace-nowrap">
               <NavItem
@@ -63,28 +59,16 @@ export default function Header() {
               />
             </ul>
           </div>
+          
           <div className="hidden xl:flex items-center space-x-4">
             <CiHeart size={28} />
             <CiShoppingCart size={28} />
-            
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  Sign In
-                </button>
-              </SignInButton>
-            </SignedOut>
-            
-            <SignedIn>
-              <UserButton 
-                appearance={{
-                  elements: {
-                    avatarBox: "w-8 h-8"
-                  }
-                }}
-              />
-            </SignedIn>
+            <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <CiUser size={20} className="mr-2" />
+              Sign In
+            </button>
           </div>
+          
           <div className="xl:hidden">
             <button
               type="button"
@@ -124,25 +108,9 @@ export default function Header() {
               />
               
               <li className="mt-4 pt-4 border-t border-gray-200">
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <button className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                      Sign In
-                    </button>
-                  </SignInButton>
-                </SignedOut>
-                
-                <SignedIn>
-                  <div className="flex items-center justify-center">
-                    <UserButton 
-                      appearance={{
-                        elements: {
-                          avatarBox: "w-10 h-10"
-                        }
-                      }}
-                    />
-                  </div>
-                </SignedIn>
+                <button className="w-full flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  Sign In
+                </button>
               </li>
             </ul>
           </div>

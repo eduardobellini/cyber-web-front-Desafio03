@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { type Product } from "../../types";
 import Toast from "../Toast/toast";
 import { useNavigate } from "react-router-dom";
+import { cartService } from "../../services/cartService";
 
 import ScrenSize from "../../Assets/MainInfo/ScreensizeMainInfo.png";
 import cpuIcon from "../../Assets/MainInfo/CpuIcoMainInfo.png";
@@ -15,7 +16,7 @@ import verifyIcon from "../../Assets/MainInfo/verifIconMainInfo.png";
 
 interface MainInfoProps {
   product: Product;
-  userId: string; // Passar userId para autenticar a requisição
+  userId: string; 
 }
 
 const MainInfo: React.FC<MainInfoProps> = ({ product, userId }) => {
@@ -78,33 +79,38 @@ const MainInfo: React.FC<MainInfoProps> = ({ product, userId }) => {
       return;
     }
 
-    console.log("Enviando para carrinho: ", {
-      userId,
-      productId: product.id,
-      quantity: 1,
-      color: selectedColor,
-      memory: selectedMemory,
+    console.log('🔍 Product details:', {
+      id: product.id,
+      name: product.name,
+      selectedColor,
+      selectedMemory,
+      userId
     });
 
     try {
-      const res = await fetch("http://localhost:7777/api/cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId,
-          productId: product.id,
-          quantity: 1,
-          color: selectedColor,
-          memory: selectedMemory,
-        }),
+      await cartService.addToCart({
+        productId: String(product.id),
+        quantity: 1,
+        color: selectedColor || undefined,
+        memory: selectedMemory || undefined,
+      }, userId);
+
+      showToast("✅ Produto adicionado ao carrinho!", "success");
+      
+      setTimeout(() => {
+        navigate("/cart");
+      }, 1500);
+      
+    } catch (error) {
+      console.error('💥 Erro ao adicionar ao carrinho:', {
+        error: error instanceof Error ? error.message : error,
+        productId: product.id,
+        userId,
+        selectedOptions: { color: selectedColor, memory: selectedMemory }
       });
-
-      if (!res.ok) throw new Error("Erro ao adicionar ao carrinho");
-
-      showToast("Adicionado ao carrinho", "success");
-      navigate("/cart"); // Redireciona para carrinho
-    } catch {
-      showToast("Erro ao adicionar ao carrinho", "error");
+      
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+      showToast(`❌ ${errorMessage}`, "error");
     }
   };
 

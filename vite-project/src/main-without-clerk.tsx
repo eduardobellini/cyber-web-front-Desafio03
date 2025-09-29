@@ -6,9 +6,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
-// Versão temporária sem Clerk - renomeie este arquivo para main.tsx se quiser usar
-console.log('🚀 Executando versão temporária SEM Clerk');
-console.log('📝 Para habilitar Clerk: configure VITE_CLERK_KEY no .env e use o main.tsx original');
+console.log('Running temporary version WITHOUT Clerk');
+console.log('To enable Clerk: configure VITE_CLERK_KEY in .env and use original main.tsx');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
