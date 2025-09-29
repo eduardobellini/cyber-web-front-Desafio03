@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { cartService } from "../../services/cartService";
 import { getCurrentUserId } from "../../utils/userConfig";
+import { useUser } from "@clerk/clerk-react";
 
 type PaymentTab = "card" | "paypal" | "paypal-credit";
 
@@ -27,9 +28,11 @@ interface SummaryItem {
 
 export default function PaymentStep() {
   const navigate = useNavigate();
+  const { user } = useUser();
   const [tab, setTab] = useState<PaymentTab>("card");
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] = useState(false);
   
   const [cardInfo, setCardInfo] = useState({
     holder: "",
@@ -75,6 +78,62 @@ export default function PaymentStep() {
   };
 
   const totals = calculateTotals();
+
+  const handlePayment = async () => {
+    setProcessing(true);
+    
+    try {
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Generate order number
+      const orderNumber = `#CYB${Date.now().toString().slice(-6)}`;
+      
+      // Store order details in sessionStorage for the success page
+      const orderDetails = {
+        orderNumber,
+        customerName: user?.firstName || 'Customer',
+        email: user?.primaryEmailAddress?.emailAddress || '',
+        totalAmount: `$${totals.total}`,
+        expectedDeliveryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      };
+      
+      sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+      
+      // Try to clear the cart after successful payment (don't fail if this doesn't work)
+      const userId = getCurrentUserId();
+      if (userId) {
+        try {
+          await cartService.clearCart(userId);
+          console.log('Cart cleared successfully');
+        } catch (clearError) {
+          console.warn('Failed to clear cart, trying to remove items individually:', clearError);
+          // Try alternative: remove each item individually
+          try {
+            for (const item of cartItems) {
+              await cartService.removeItem(item.id);
+            }
+            console.log('Cart items removed individually');
+          } catch (removeError) {
+            console.warn('Failed to remove individual items, but payment was successful:', removeError);
+          }
+        }
+      }
+      
+      // Navigate to success page
+      navigate('/payment-success');
+      
+    } catch (error) {
+      console.error('Payment failed:', error);
+      alert('Payment failed. Please try again.');
+    } finally {
+      setProcessing(false);
+    }
+  };
 
   const summaryItems: SummaryItem[] = cartItems.map((item) => ({
     id: item.id,
@@ -282,13 +341,15 @@ export default function PaymentStep() {
               Back
             </button>
             <button 
-              onClick={() => {
-                alert('Payment processed successfully!');
-                navigate('/');
-              }}
-              className="bg-black text-white rounded px-6 py-2 hover:bg-gray-900 font-semibold w-1/2"
+              onClick={handlePayment}
+              disabled={processing}
+              className={`rounded px-6 py-2 font-semibold w-1/2 transition-colors ${
+                processing 
+                  ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                  : 'bg-black text-white hover:bg-gray-900'
+              }`}
             >
-              Pay
+              {processing ? 'Processing...' : 'Pay'}
             </button>
           </div>
         </section>

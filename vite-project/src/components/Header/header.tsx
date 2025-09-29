@@ -2,6 +2,8 @@ import { useState } from "react";
 import CyberImg from "../../Assets/Cyber.png";
 import NavItem from "./navItem";
 import NavItemMobile from "./navItemMobile";
+import CartDropdown from "../CartDropdown/CartDropdown";
+import { useCartCount } from "../../hooks/useCartCount";
 
 import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
@@ -14,6 +16,8 @@ import {
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const { cartCount, updateCartCount } = useCartCount();
 
   return (
     <header className="sticky top-0 z-30">
@@ -63,9 +67,25 @@ export default function Header() {
               />
             </ul>
           </div>
-          <div className="hidden xl:flex items-center space-x-4">
+          <div className="hidden xl:flex items-center space-x-4 relative">
             <CiHeart size={28} />
-            <CiShoppingCart size={28} />
+            <button 
+              onClick={() => setCartOpen(!cartOpen)}
+              className="relative p-1 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <CiShoppingCart size={28} />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
+            </button>
+            
+            <CartDropdown 
+              isOpen={cartOpen} 
+              onClose={() => setCartOpen(false)}
+              onCartUpdate={updateCartCount}
+            />
             
             <SignedOut>
               <SignInButton mode="modal">
@@ -85,7 +105,25 @@ export default function Header() {
               />
             </SignedIn>
           </div>
-          <div className="xl:hidden">
+          <div className="xl:hidden flex items-center space-x-2">
+            <button 
+              onClick={() => setCartOpen(!cartOpen)}
+              className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <CiShoppingCart size={24} />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
+            </button>
+            
+            <CartDropdown 
+              isOpen={cartOpen} 
+              onClose={() => setCartOpen(false)}
+              onCartUpdate={updateCartCount}
+            />
+            
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
