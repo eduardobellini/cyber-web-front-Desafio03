@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Routes, Route } from 'react-router-dom';
 
 import Header from './components/Header/header';
@@ -11,6 +9,9 @@ import FilterPage from './pages/FilterPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import ScrollToTop from './components/ScrollToTop/scrollToTop';
 import ShoppingCart from './components/CartShop/cartShop';
+import UserProfilePage from './pages/ProfilePage';
+import ProtectedRoute from './components/ProtectedRoute';
+import { SignIn, SignUp } from '@clerk/clerk-react';
 
 function App() {
   return (
@@ -20,12 +21,37 @@ function App() {
 
         <div className="flex-grow">
           <Routes>
+            {/* Rotas de Autenticação */}
+            <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
+            <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
+            
+            {/* Rota de Login (modal) - mantida para compatibilidade */}
+            <Route path="/login" element={<SignIn />} />
+            
+            {/* Rotas Públicas */}
             <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<ProductsPage />} />
             <Route path="/shop/:category" element={<ProductsPage />} />
             <Route path="/shop/filters" element={<FilterPage />} />
             <Route path="/product/:productId" element={<ProductDetailsPage />} />
-            <Route path="/cart" element={<ShoppingCart />} /> 
+            
+            {/* Rotas Protegidas */}
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <UserProfilePage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/cart" 
+              element={
+                <ProtectedRoute>
+                  <ShoppingCart />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </div>
 
