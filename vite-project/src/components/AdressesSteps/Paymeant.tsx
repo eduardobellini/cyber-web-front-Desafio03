@@ -42,6 +42,13 @@ export default function PaymentStep() {
     sameAsBilling: true,
   });
 
+  const [errors, setErrors] = useState({
+    holder: "",
+    number: "",
+    exp: "",
+    cvv: "",
+  });
+
   useEffect(() => {
     const loadCartItems = async () => {
       try {
@@ -79,17 +86,60 @@ export default function PaymentStep() {
 
   const totals = calculateTotals();
 
+  const validateCardInfo = () => {
+    const newErrors = {
+      holder: "",
+      number: "",
+      exp: "",
+      cvv: "",
+    };
+
+    
+    if (!cardInfo.holder.trim()) {
+      newErrors.holder = "Cardholder name is required";
+    }
+
+    
+    const cardNumber = cardInfo.number.replace(/\s/g, "");
+    if (!cardNumber) {
+      newErrors.number = "Card number is required";
+    } else if (cardNumber.length !== 16 || !/^\d+$/.test(cardNumber)) {
+      newErrors.number = "Card number must be exactly 16 digits";
+    }
+
+    if (!cardInfo.exp.trim()) {
+      newErrors.exp = "Expiration date is required";
+    } else if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(cardInfo.exp)) {
+      newErrors.exp = "Format: MM/YY (e.g., 12/25)";
+    }
+
+    if (!cardInfo.cvv.trim()) {
+      newErrors.cvv = "CVV is required";
+    } else if (cardInfo.cvv.length !== 3 || !/^\d+$/.test(cardInfo.cvv)) {
+      newErrors.cvv = "CVV must be exactly 3 digits";
+    }
+
+    setErrors(newErrors);
+    
+    
+    return !Object.values(newErrors).some(error => error !== "");
+  };
+
   const handlePayment = async () => {
+    
+    if (!validateCardInfo()) {
+      return; 
+    }
+
     setProcessing(true);
     
     try {
-      // Simulate payment processing
+      
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Generate order number
+      
       const orderNumber = `#CYB${Date.now().toString().slice(-6)}`;
       
-      // Store order details in sessionStorage for the success page
       const orderDetails = {
         orderNumber,
         customerName: user?.firstName || 'Customer',
@@ -104,7 +154,7 @@ export default function PaymentStep() {
       
       sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
       
-      // Try to clear the cart after successful payment (don't fail if this doesn't work)
+      
       const userId = getCurrentUserId();
       if (userId) {
         try {
@@ -112,7 +162,7 @@ export default function PaymentStep() {
           console.log('Cart cleared successfully');
         } catch (clearError) {
           console.warn('Failed to clear cart, trying to remove items individually:', clearError);
-          // Try alternative: remove each item individually
+          
           try {
             for (const item of cartItems) {
               await cartService.removeItem(item.id);
@@ -124,7 +174,7 @@ export default function PaymentStep() {
         }
       }
       
-      // Navigate to success page
+     
       navigate('/payment-success');
       
     } catch (error) {
@@ -282,36 +332,108 @@ export default function PaymentStep() {
                 <div className="absolute top-4 right-8 w-20 h-1 bg-gradient-to-r from-gray-600 to-transparent rounded transform rotate-12"></div>
                 <div className="absolute top-8 right-6 w-28 h-1 bg-gradient-to-r from-gray-500 to-transparent rounded transform rotate-12"></div>
               </div>
-              <form className="flex flex-col gap-3 w-full max-w-[355px] mx-auto">
-                <input
-                  type="text"
-                  className="border border-gray-200 rounded px-4 py-2"
-                  placeholder="Cardholder Name"
-                  value={cardInfo.holder}
-                  onChange={(e) => setCardInfo({ ...cardInfo, holder: e.target.value })}
-                />
-                <input
-                  type="text"
-                  className="border border-gray-200 rounded px-4 py-2"
-                  placeholder="Card Number"
-                  value={cardInfo.number}
-                  onChange={(e) => setCardInfo({ ...cardInfo, number: e.target.value })}
-                />
+              <form className="flex flex-col gap-3 w-full max-w-[355px] mx-auto" autoComplete="off" noValidate data-form-type="other">
+                
+                <input type="text" style={{display: 'none'}} autoComplete="new-password" />
+                <input type="password" style={{display: 'none'}} autoComplete="new-password" />
+                
+                <div className="flex flex-col">
+                  <input
+                    type="text"
+                    name="fullname"
+                    className={`border rounded px-4 py-2 ${errors.holder ? 'border-red-500' : 'border-gray-200'}`}
+                    placeholder="Cardholder Name"
+                    value={cardInfo.holder}
+                    autoComplete="nope"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
+                    readOnly
+                    onFocus={(e) => e.target.removeAttribute('readonly')}
+                    onChange={(e) => {
+                      setCardInfo({ ...cardInfo, holder: e.target.value });
+                      if (errors.holder) setErrors({ ...errors, holder: "" });
+                    }}
+                  />
+                  {errors.holder && <span className="text-red-500 text-sm mt-1">{errors.holder}</span>}
+                </div>
+                <div className="flex flex-col">
+                  <input
+                    type="text"
+                    name="account-number"
+                    className={`border rounded px-4 py-2 ${errors.number ? 'border-red-500' : 'border-gray-200'}`}
+                    placeholder="Card Number (16 digits)"
+                    value={cardInfo.number}
+                    maxLength={19} 
+                    autoComplete="nope"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
+                    inputMode="numeric"
+                    readOnly
+                    onFocus={(e) => e.target.removeAttribute('readonly')}
+                    onChange={(e) => {
+                      
+                      const value = e.target.value.replace(/\D/g, ""); 
+                      const formattedValue = value.replace(/(\d{4})(?=\d)/g, "$1 "); 
+                      setCardInfo({ ...cardInfo, number: formattedValue });
+                      if (errors.number) setErrors({ ...errors, number: "" });
+                    }}
+                  />
+                  {errors.number && <span className="text-red-500 text-sm mt-1">{errors.number}</span>}
+                </div>
                 <div className="flex gap-3">
-                  <input
-                    type="text"
-                    className="border border-gray-200 rounded px-4 py-2 w-1/2"
-                    placeholder="Exp.Date"
-                    value={cardInfo.exp}
-                    onChange={(e) => setCardInfo({ ...cardInfo, exp: e.target.value })}
-                  />
-                  <input
-                    type="text"
-                    className="border border-gray-200 rounded px-4 py-2 w-1/2"
-                    placeholder="CVV"
-                    value={cardInfo.cvv}
-                    onChange={(e) => setCardInfo({ ...cardInfo, cvv: e.target.value })}
-                  />
+                  <div className="flex flex-col w-1/2">
+                    <input
+                      type="text"
+                      name="expire-date"
+                      className={`border rounded px-4 py-2 ${errors.exp ? 'border-red-500' : 'border-gray-200'}`}
+                      placeholder="MM/YY"
+                      value={cardInfo.exp}
+                      maxLength={5}
+                      autoComplete="nope"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      inputMode="numeric"
+                      readOnly
+                      onFocus={(e) => e.target.removeAttribute('readonly')}
+                      onChange={(e) => {
+                        
+                        let value = e.target.value.replace(/\D/g, ""); 
+                        if (value.length >= 2) {
+                          value = value.substring(0, 2) + "/" + value.substring(2, 4);
+                        }
+                        setCardInfo({ ...cardInfo, exp: value });
+                        if (errors.exp) setErrors({ ...errors, exp: "" });
+                      }}
+                    />
+                    {errors.exp && <span className="text-red-500 text-xs mt-1">{errors.exp}</span>}
+                  </div>
+                  <div className="flex flex-col w-1/2">
+                    <input
+                      type="text"
+                      name="security-code"
+                      className={`border rounded px-4 py-2 ${errors.cvv ? 'border-red-500' : 'border-gray-200'}`}
+                      placeholder="CVV (3 digits)"
+                      value={cardInfo.cvv}
+                      maxLength={3}
+                      autoComplete="nope"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      inputMode="numeric"
+                      readOnly
+                      onFocus={(e) => e.target.removeAttribute('readonly')}
+                      onChange={(e) => {
+                        
+                        const value = e.target.value.replace(/\D/g, "");
+                        setCardInfo({ ...cardInfo, cvv: value });
+                        if (errors.cvv) setErrors({ ...errors, cvv: "" });
+                      }}
+                    />
+                    {errors.cvv && <span className="text-red-500 text-xs mt-1">{errors.cvv}</span>}
+                  </div>
                 </div>
                 <label className="flex items-center gap-2 pt-1">
                   <input
@@ -325,7 +447,7 @@ export default function PaymentStep() {
               </form>
             </div>
           )}
-          {/* Other tabs */}
+         
           {(tab === "paypal" || tab === "paypal-credit") && (
             <div className="w-full max-w-[355px] mx-auto text-center py-24 text-gray-400">
               {tab === "paypal"
@@ -355,6 +477,30 @@ export default function PaymentStep() {
         </section>
       </div>
       <style>{`
+        /* Hide browser autofill warnings and suggestions */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+          -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+        }
+        
+        input::-webkit-credentials-auto-fill-button {
+          display: none !important;
+        }
+        
+        /* Hide password manager notifications */
+        input[type="text"]::-webkit-contacts-auto-fill-button,
+        input[type="text"]::-webkit-credentials-auto-fill-button {
+          display: none !important;
+        }
+        
+        /* Disable browser form validation tooltips */
+        input:invalid {
+          box-shadow: none !important;
+        }
+        
         @media (max-width: 1024px) {
           .lg\\:w\\[420px\\] {
             width: 100% !important;
