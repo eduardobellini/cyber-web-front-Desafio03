@@ -15,7 +15,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AddressStep from './components/AdressesSteps/AdressesSteps';
 import ShippingStep from './components/AdressesSteps/ShippingStep';
 import PaymentStep from './components/AdressesSteps/Paymeant';
-// 🔐 Componentes de autenticação do Clerk
+import PaymentSuccessPage from './pages/PaymentSuccessPage';
+
 import { SignIn, SignUp } from '@clerk/clerk-react';
 
 function App() {
@@ -78,6 +79,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <PaymentStep />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/payment-success" 
+              element={
+                <ProtectedRoute>
+                  <PaymentSuccessPage />
                 </ProtectedRoute>
               } 
             />

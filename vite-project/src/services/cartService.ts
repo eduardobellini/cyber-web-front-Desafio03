@@ -230,8 +230,9 @@ class CartService {
       method: 'DELETE',
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to clear cart');
+    // If 404, cart is already empty or doesn't exist - that's fine
+    if (!response.ok && response.status !== 404) {
+      throw new Error(`Failed to clear cart (${response.status})`);
     }
   }
 }
