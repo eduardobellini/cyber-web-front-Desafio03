@@ -235,7 +235,7 @@ const ShoppingCart: React.FC = () => {
             onClick={handleCheckout}
             className="mt-8 w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
           >
-            🛒 Checkout
+             Checkout
           </button>
         </div>
       </div>
