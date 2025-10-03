@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { fetchCategories } from '../../services/categoryService';
 import CategoryBrowser from '../../components/CategoryBrowser/categoryBrowser';
