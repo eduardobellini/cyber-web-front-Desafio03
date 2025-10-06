@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { API_CONFIG } from "../../../utils/userConfig";
 
 type CartItemType = {
   id: string;
@@ -15,7 +16,7 @@ const CartItem = ({ item, userId }: { item: CartItemType; userId: string }) => {
 
   const updateQuantity = async (newQuantity: number) => {
     if (newQuantity < 1) return;
-    const res = await fetch(`http://localhost:7777/api/cart/item/${item.id}`, {
+    const res = await fetch(`${API_CONFIG.BASE_URL}/cart/item/${item.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ quantity: newQuantity }),
@@ -29,7 +30,7 @@ const CartItem = ({ item, userId }: { item: CartItemType; userId: string }) => {
   };
 
   const removeItem = async () => {
-    const res = await fetch(`http://localhost:7777/api/cart/item/${item.id}`, {
+    const res = await fetch(`${API_CONFIG.BASE_URL}/cart/item/${item.id}`, {
       method: "DELETE",
     });
     if (!res.ok) {

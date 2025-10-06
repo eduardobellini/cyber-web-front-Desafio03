@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { API_CONFIG } from '../../utils/userConfig';
 
 const userId = '1'; 
 
@@ -20,7 +21,7 @@ type CartResponse = {
 };
 
 const fetchCart = async (): Promise<CartResponse> => {
-  const res = await fetch(`http://localhost:7777/api/cart/${userId}`);
+  const res = await fetch(`${API_CONFIG.BASE_URL}/cart/${userId}`);
   if (!res.ok) throw new Error('Error when fetching the cart');
   return res.json();
 };
@@ -35,7 +36,7 @@ const CartPage: React.FC = () => {
 
   const updateQuantity = async (itemId: number, newQuantity: number) => {
     if (newQuantity < 1) return;
-    const res = await fetch(`http://localhost:7777/api/cart/item/${itemId}`, {
+    const res = await fetch(`${API_CONFIG.BASE_URL}/cart/item/${itemId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ quantity: newQuantity }),
@@ -48,7 +49,7 @@ const CartPage: React.FC = () => {
   };
 
   const removeItem = async (itemId: number) => {
-    const res = await fetch(`http://localhost:7777/api/cart/item/${itemId}`, {
+    const res = await fetch(`${API_CONFIG.BASE_URL}/cart/item/${itemId}`, {
       method: 'DELETE',
     });
     if (!res.ok) {
