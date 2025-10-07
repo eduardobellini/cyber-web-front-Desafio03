@@ -17,7 +17,7 @@ export const getCurrentUserId = (): string => {
 };
 
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_URL_API || 'http://3.22.168.72:3000/api',
+  BASE_URL: import.meta.env.VITE_URL_API || 'http://3.22.168.72:7777/api',
   ENDPOINTS: {
     CART: '/cart',
     CART_ITEM: '/cart/item',
