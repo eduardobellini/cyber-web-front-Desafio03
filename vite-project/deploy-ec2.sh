@@ -56,7 +56,15 @@ if [ -d "dist" ]; then
     echo "💾 Creating backup..."
     sudo cp -r /var/www/html /var/www/html_backup_$(date +%Y%m%d_%H%M%S) 2>/dev/null || echo "⚠️  Could not create backup (maybe first deployment)"
     
-    # Copy new files
+# Deploy options
+echo "🚀 Choose deployment method:"
+echo "1. Static files with Nginx (Recommended)"
+echo "2. PM2 with Vite preview server"
+
+read -p "Enter option (1 or 2): " DEPLOY_OPTION
+
+if [ "$DEPLOY_OPTION" = "1" ]; then
+    # Copy new files to nginx
     echo "📂 Copying files to web directory..."
     sudo cp -r dist/* /var/www/html/
     
@@ -64,10 +72,27 @@ if [ -d "dist" ]; then
     echo "🔄 Restarting nginx..."
     sudo systemctl restart nginx
     
-    echo "🎉 Deployment completed successfully!"
-    echo "🌐 Your application should now be available at your EC2 public IP"
+    echo "🎉 Static deployment completed successfully!"
+    echo "🌐 Your application is available at your EC2 public IP"
+    
+elif [ "$DEPLOY_OPTION" = "2" ]; then
+    # PM2 deployment
+    echo "🔄 Stopping PM2 processes..."
+    pm2 stop all 2>/dev/null || echo "No PM2 processes to stop"
+    pm2 delete all 2>/dev/null || echo "No PM2 processes to delete"
+    
+    echo "🚀 Starting with PM2..."
+    pm2 start npm --name "cyber-web-front" -- start
+    pm2 save
+    
+    echo "🎉 PM2 deployment completed successfully!"
+    echo "🌐 Your application is available at your EC2 public IP:3000"
+    echo "📊 Check PM2 status with: pm2 status"
     
 else
+    echo "❌ Invalid option selected"
+    exit 1
+fielse
     echo "❌ Build failed - dist folder not found"
     exit 1
 fi

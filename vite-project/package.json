@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "build:ec2": "vite build --mode production",
     "build:compatible": "tsc -p tsconfig.app.compatible.json && vite build",
+    "start": "vite preview --port 3000 --host 0.0.0.0",
     "lint": "eslint .",
     "preview": "vite preview"
   },
