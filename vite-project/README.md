@@ -17,8 +17,7 @@ A modern, full-featured e-commerce application built with React 19, TypeScript, 
    ```
 
 3. **Start development server**
-   npm run dev
-
+   give a cd vite and tab to complete and run this command on terminar *npm run dev*
 
 4. **Open browser**
    Visit `http://localhost:5173`
