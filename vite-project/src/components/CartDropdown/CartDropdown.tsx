@@ -44,9 +44,9 @@ export default function CartDropdown({ isOpen, onClose, onCartUpdate }: CartDrop
   const handleRemoveItem = async (itemId: number) => {
     try {
       await cartService.removeItem(itemId);
-      await loadCartItems(); // Reload cart after removal
+      await loadCartItems(); 
       if (onCartUpdate) {
-        await onCartUpdate(); // Update cart count in header
+        await onCartUpdate(); 
       }
     } catch (error) {
       console.error('Failed to remove item:', error);
@@ -71,13 +71,13 @@ export default function CartDropdown({ isOpen, onClose, onCartUpdate }: CartDrop
 
   return (
     <>
-      {/* Overlay */}
+      
       <div 
         className="fixed inset-0 z-40" 
         onClick={onClose}
       />
       
-      {/* Dropdown */}
+     
       <div className="absolute top-16 right-4 w-80 bg-white shadow-xl rounded-lg border border-gray-200 z-50 max-h-96 overflow-hidden">
         <div className="p-4 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900">Shopping Cart</h3>
