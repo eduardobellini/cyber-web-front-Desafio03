@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:ec2": "vite build --mode production",
+    "build:compatible": "tsc -p tsconfig.app.compatible.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
